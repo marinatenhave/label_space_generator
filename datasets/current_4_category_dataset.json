@@ -1,0 +1,1219 @@
+{
+    "car": [
+        "object"
+    ],
+    "truck": [
+        "object"
+    ],
+    "bicycle": [
+        "object"
+    ],
+    "motorcycle": [
+        "object"
+    ],
+    "shopping cart": [
+        "object"
+    ],
+    "wheelchair": [
+        "object"
+    ],
+    "scooter": [
+        "object"
+    ],
+    "traffic cone": [
+        "object"
+    ],
+    "bench": [
+        "object"
+    ],
+    "luggage cart": [
+        "object"
+    ],
+    "potted plant": [
+        "object"
+    ],
+    "street sign": [
+        "object"
+    ],
+    "ATM": [
+        "object"
+    ],
+    "playground slide": [
+        "object"
+    ],
+    "vending machine": [
+        "object"
+    ],
+    "fire hydrant": [
+        "object"
+    ],
+    "mailbox": [
+        "object"
+    ],
+    "parking meter": [
+        "object"
+    ],
+    "lamp post": [
+        "object"
+    ],
+    "bus stop shelter": [
+        "object"
+    ],
+    "trash can": [
+        "object"
+    ],
+    "recycling bin": [
+        "object"
+    ],
+    "stop sign": [
+        "object"
+    ],
+    "speed bump": [
+        "object"
+    ],
+    "railroad crossing sign": [
+        "object"
+    ],
+    "shopping basket": [
+        "object"
+    ],
+    "picnic table": [
+        "object"
+    ],
+    "outdoor sculpture": [
+        "object"
+    ],
+    "fountain": [
+        "object"
+    ],
+    "bike rack": [
+        "object"
+    ],
+    "newsstand": [
+        "object"
+    ],
+    "telephone booth": [
+        "object"
+    ],
+    "street clock": [
+        "object"
+    ],
+    "billboard": [
+        "object"
+    ],
+    "payphone": [
+        "object"
+    ],
+    "drinking fountain": [
+        "object"
+    ],
+    "manhole cover": [
+        "object"
+    ],
+    "public seating": [
+        "object"
+    ],
+    "statue": [
+        "object"
+    ],
+    "kiosk": [
+        "object"
+    ],
+    "water cooler": [
+        "object"
+    ],
+    "advertisement board": [
+        "object"
+    ],
+    "bench swing": [
+        "object"
+    ],
+    "flower pot": [
+        "object"
+    ],
+    "street barricade": [
+        "object"
+    ],
+    "sandbag": [
+        "object"
+    ],
+    "storage container": [
+        "object"
+    ],
+    "gas pump": [
+        "object"
+    ],
+    "airport baggage cart": [
+        "object"
+    ],
+    "book return bin": [
+        "object"
+    ],
+    "sports goalpost": [
+        "object"
+    ],
+    "baby stroller": [
+        "object"
+    ],
+    "wheelbarrow": [
+        "object"
+    ],
+    "garden hose": [
+        "object"
+    ],
+    "birdhouse": [
+        "object"
+    ],
+    "piano bench": [
+        "object"
+    ],
+    "fire escape ladder": [
+        "object"
+    ],
+    "lawn chair": [
+        "object"
+    ],
+    "mop bucket": [
+        "object"
+    ],
+    "street lamp": [
+        "object"
+    ],
+    "scarecrow": [
+        "object"
+    ],
+    "telescope": [
+        "object"
+    ],
+    "snow blower": [
+        "object"
+    ],
+    "rocking chair": [
+        "object"
+    ],
+    "beach umbrella": [
+        "object"
+    ],
+    "flagpole": [
+        "object"
+    ],
+    "cannon": [
+        "object"
+    ],
+    "skateboard": [
+        "object"
+    ],
+    "roller skates": [
+        "object"
+    ],
+    "diving board": [
+        "object"
+    ],
+    "lifeguard stand": [
+        "object"
+    ],
+    "kayak": [
+        "object"
+    ],
+    "canoe": [
+        "object"
+    ],
+    "rowing machine": [
+        "object"
+    ],
+    "barbecue grill": [
+        "object"
+    ],
+    "suitcase": [
+        "object"
+    ],
+    "fireplace": [
+        "object"
+    ],
+    "climbing wall": [
+        "surface"
+    ],
+    "firewood stack": [
+        "object"
+    ],
+    "hiking pole": [
+        "object"
+    ],
+    "campfire ring": [
+        "object"
+    ],
+    "tent": [
+        "object"
+    ],
+    "sleeping bag": [
+        "object"
+    ],
+    "ice chest": [
+        "object"
+    ],
+    "lantern": [
+        "object"
+    ],
+    "typewriter": [
+        "object"
+    ],
+    "pocket watch": [
+        "object"
+    ],
+    "binoculars": [
+        "object"
+    ],
+    "cuckoo clock": [
+        "object"
+    ],
+    "jukebox": [
+        "object"
+    ],
+    "cash register": [
+        "object"
+    ],
+    "arcade machine": [
+        "object"
+    ],
+    "trolley cart": [
+        "object"
+    ],
+    "chess table": [
+        "object"
+    ],
+    "train signal": [
+        "object"
+    ],
+    "megaphone": [
+        "object"
+    ],
+    "music stand": [
+        "object"
+    ],
+    "scoreboard": [
+        "object"
+    ],
+    "turnstile": [
+        "object"
+    ],
+    "air conditioning unit": [
+        "object"
+    ],
+    "coat rack": [
+        "object"
+    ],
+    "bird bath": [
+        "object"
+    ],
+    "bicycle pump": [
+        "object"
+    ],
+    "beach": [
+        "region"
+    ],
+    "lake": [
+        "region"
+    ],
+    "forest": [
+        "region"
+    ],
+    "mountain": [
+        "region"
+    ],
+    "desert": [
+        "region"
+    ],
+    "river": [
+        "region"
+    ],
+    "plaza": [
+        "region"
+    ],
+    "courtyard": [
+        "region"
+    ],
+    "square": [
+        "region"
+    ],
+    "parking lot": [
+        "region"
+    ],
+    "room": [
+        "region"
+    ],
+    "island": [
+        "region"
+    ],
+    "bridge": [
+        "region"
+    ],
+    "stadium": [
+        "region"
+    ],
+    "cave": [
+        "region"
+    ],
+    "airport terminal": [
+        "region"
+    ],
+    "train station": [
+        "region"
+    ],
+    "highway": [
+        "region"
+    ],
+    "tunnel": [
+        "region"
+    ],
+    "parking garage": [
+        "region"
+    ],
+    "subway platform": [
+        "region"
+    ],
+    "field": [
+        "region"
+    ],
+    "balcony": [
+        "region"
+    ],
+    "sidewalk": [
+        "surface",
+        "region"
+    ],
+    "train platform": [
+        "surface",
+        "region"
+    ],
+    "road": [
+        "surface",
+        "region"
+    ],
+    "hallway": [
+        "region"
+    ],
+    "amphitheater": [
+        "region"
+    ],
+    "shopping mall": [
+        "region"
+    ],
+    "marketplace": [
+        "region"
+    ],
+    "alleyway": [
+        "region"
+    ],
+    "skyscraper lobby": [
+        "region"
+    ],
+    "dock": [
+        "region"
+    ],
+    "boardwalk": [
+        "region"
+    ],
+    "pier": [
+        "region"
+    ],
+    "theme park": [
+        "region"
+    ],
+    "fountain plaza": [
+        "region"
+    ],
+    "marina": [
+        "region"
+    ],
+    "reservoir": [
+        "region"
+    ],
+    "campground": [
+        "region"
+    ],
+    "train yard": [
+        "region"
+    ],
+    "construction site": [
+        "region"
+    ],
+    "warehouse": [
+        "region"
+    ],
+    "bus terminal": [
+        "region"
+    ],
+    "observatory": [
+        "region"
+    ],
+    "castle courtyard": [
+        "region"
+    ],
+    "ski resort": [
+        "region"
+    ],
+    "race track": [
+        "region"
+    ],
+    "national park": [
+        "region"
+    ],
+    "aquarium exhibit hall": [
+        "region"
+    ],
+    "university campus": [
+        "region"
+    ],
+    "stadium concourse": [
+        "region"
+    ],
+    "harbor": [
+        "region"
+    ],
+    "waterfall area": [
+        "region"
+    ],
+    "monument plaza": [
+        "region"
+    ],
+    "greenhouse": [
+        "region"
+    ],
+    "industrial complex": [
+        "region"
+    ],
+    "museum exhibit hall": [
+        "region"
+    ],
+    "train tunnel": [
+        "region"
+    ],
+    "metro station": [
+        "region"
+    ],
+    "library reading hall": [
+        "region"
+    ],
+    "sports arena": [
+        "region"
+    ],
+    "cliffside overlook": [
+        "region"
+    ],
+    "castle ruins": [
+        "region"
+    ],
+    "farmstead": [
+        "region"
+    ],
+    "orchard": [
+        "region"
+    ],
+    "vineyard": [
+        "region"
+    ],
+    "fortress courtyard": [
+        "region"
+    ],
+    "water park": [
+        "region"
+    ],
+    "zoo habitat": [
+        "region"
+    ],
+    "botanical garden": [
+        "region"
+    ],
+    "art gallery space": [
+        "region"
+    ],
+    "music festival venue": [
+        "region"
+    ],
+    "skate park": [
+        "region"
+    ],
+    "golf course": [
+        "region"
+    ],
+    "aviary": [
+        "region"
+    ],
+    "train depot": [
+        "region"
+    ],
+    "market street": [
+        "region"
+    ],
+    "city square": [
+        "region"
+    ],
+    "town hall courtyard": [
+        "region"
+    ],
+    "esplanade": [
+        "region"
+    ],
+    "canal walkway": [
+        "region"
+    ],
+    "wildlife reserve": [
+        "region"
+    ],
+    "bike path": [
+        "region",
+        "surface"
+    ],
+    "dirt trail": [
+        "region",
+        "surface"
+    ],
+    "pedestrian bridge": [
+        "region"
+    ],
+    "overpass": [
+        "region"
+    ],
+    "archaeological site": [
+        "region"
+    ],
+    "swamp": [
+        "region"
+    ],
+    "meadow": [
+        "region"
+    ],
+    "cemetery": [
+        "region"
+    ],
+    "gorge": [
+        "region"
+    ],
+    "basin": [
+        "region"
+    ],
+    "glacier": [
+        "region"
+    ],
+    "volcanic crater": [
+        "region"
+    ],
+    "salt flat": [
+        "surface"
+    ],
+    "steppes": [
+        "region"
+    ],
+    "prairie": [
+        "region"
+    ],
+    "canyon": [
+        "region"
+    ],
+    "mesa": [
+        "region"
+    ],
+    "sand": [
+        "surface"
+    ],
+    "grass": [
+        "surface"
+    ],
+    "walls": [
+        "surface"
+    ],
+    "floors": [
+        "surface"
+    ],
+    "ground": [
+        "surface"
+    ],
+    "cave floor": [
+        "surface"
+    ],
+    "forest path": [
+        "surface",
+        "region"
+    ],
+    "soil": [
+        "surface"
+    ],
+    "frozen lake": [
+        "surface",
+        "region"
+    ],
+    "sports court": [
+        "surface",
+        "region"
+    ],
+    "railroad tracks": [
+        "surface"
+    ],
+    "conveyor belt": [
+        "surface"
+    ],
+    "escalator steps": [
+        "surface"
+    ],
+    "helipad": [
+        "surface"
+    ],
+    "marble floor": [
+        "surface"
+    ],
+    "wooden deck": [
+        "surface",
+        "region"
+    ],
+    "paved walkway": [
+        "surface",
+        "region"
+    ],
+    "dirt path": [
+        "surface",
+        "region"
+    ],
+    "cobblestone street": [
+        "surface",
+        "region"
+    ],
+    "boardwalk planks": [
+        "surface"
+    ],
+    "muddy trail": [
+        "surface",
+        "region"
+    ],
+    "brick pavement": [
+        "surface"
+    ],
+    "tile flooring": [
+        "surface"
+    ],
+    "asphalt road": [
+        "surface",
+        "region"
+    ],
+    "gravel driveway": [
+        "surface",
+        "region"
+    ],
+    "polished stone plaza": [
+        "surface",
+        "region"
+    ],
+    "concrete pavement": [
+        "surface"
+    ],
+    "ski slope": [
+        "surface",
+        "region"
+    ],
+    "dry riverbed": [
+        "surface"
+    ],
+    "metal bridge deck": [
+        "surface"
+    ],
+    "tennis court": [
+        "surface",
+        "region"
+    ],
+    "basketball court": [
+        "surface",
+        "region"
+    ],
+    "ice rink": [
+        "surface",
+        "region"
+    ],
+    "race track surface": [
+        "surface"
+    ],
+    "rooftop terrace": [
+        "surface",
+        "region"
+    ],
+    "pier surface": [
+        "surface"
+    ],
+    "outdoor stage": [
+        "surface",
+        "region"
+    ],
+    "airport runway": [
+        "surface",
+        "region"
+    ],
+    "landing pad": [
+        "surface"
+    ],
+    "synthetic turf": [
+        "surface"
+    ],
+    "sand dune ridge": [
+        "surface",
+        "region"
+    ],
+    "mudflat": [
+        "surface"
+    ],
+    "rocky shoreline": [
+        "surface",
+        "region"
+    ],
+    "tundra ground": [
+        "surface"
+    ],
+    "grassy meadow": [
+        "region"
+    ],
+    "volcanic rock surface": [
+        "surface"
+    ],
+    "stepping stones": [
+        "surface"
+    ],
+    "cliff edge": [
+        "surface"
+    ],
+    "wooden pier": [
+        "region"
+    ],
+    "skate park surface": [
+        "surface"
+    ],
+    "dry lake bed": [
+        "surface",
+        "region"
+    ],
+    "marble staircase": [
+        "surface"
+    ],
+    "mountain trail": [
+        "surface",
+        "region"
+    ],
+    "bamboo flooring": [
+        "surface"
+    ],
+    "concrete steps": [
+        "surface"
+    ],
+    "gymnasium floor": [
+        "surface"
+    ],
+    "workshop floor": [
+        "surface"
+    ],
+    "dock surface": [
+        "surface"
+    ],
+    "warehouse floor": [
+        "surface"
+    ],
+    "parking garage surface": [
+        "surface"
+    ],
+    "train station floor": [
+        "surface"
+    ],
+    "metro platform": [
+        "surface",
+        "region"
+    ],
+    "balcony floor": [
+        "surface"
+    ],
+    "golf course green": [
+        "surface"
+    ],
+    "hiking path": [
+        "surface",
+        "region"
+    ],
+    "dune crest": [
+        "surface"
+    ],
+    "stone walkway": [
+        "surface",
+        "region"
+    ],
+    "wood chip groundcover": [
+        "surface"
+    ],
+    "peat bog surface": [
+        "surface"
+    ],
+    "rock climbing wall": [
+        "surface"
+    ],
+    "castle rampart walkway": [
+        "surface",
+        "region"
+    ],
+    "courtyard stone tiles": [
+        "surface"
+    ],
+    "playground rubber mat": [
+        "surface"
+    ],
+    "aircraft carrier deck": [
+        "surface",
+        "region"
+    ],
+    "solar panel farm surface": [
+        "surface"
+    ],
+    "wind turbine platform": [
+        "surface",
+        "region"
+    ],
+    "fountain basin floor": [
+        "surface"
+    ],
+    "archaeological dig site floor": [
+        "surface"
+    ],
+    "glacier ice sheet": [
+        "surface"
+    ],
+    "mesa plateau": [
+        "surface"
+    ],
+    "abandoned airstrip": [
+        "surface",
+        "region"
+    ],
+    "amphitheater steps": [
+        "surface"
+    ],
+    "railway station concourse": [
+        "surface",
+        "region"
+    ],
+    "mall atrium floor": [
+        "surface"
+    ],
+    "market square ground": [
+        "surface"
+    ],
+    "fortress courtyard tiles": [
+        "surface"
+    ],
+    "submarine dock": [
+        "surface",
+        "region"
+    ],
+    "industrial walkway": [
+        "region",
+        "surface"
+    ],
+    "underground bunker floor": [
+        "surface"
+    ],
+    "temple stone flooring": [
+        "surface"
+    ],
+    "historical site plaza": [
+        "surface",
+        "region"
+    ],
+    "outdoor chessboard tiles": [
+        "surface"
+    ],
+    "human": [
+        "agent"
+    ],
+    "dog": [
+        "agent"
+    ],
+    "cat": [
+        "agent"
+    ],
+    "bird": [
+        "agent"
+    ],
+    "horse": [
+        "agent"
+    ],
+    "cow": [
+        "agent"
+    ],
+    "sheep": [
+        "agent"
+    ],
+    "goat": [
+        "agent"
+    ],
+    "deer": [
+        "agent"
+    ],
+    "bear": [
+        "agent"
+    ],
+    "fox": [
+        "agent"
+    ],
+    "rabbit": [
+        "agent"
+    ],
+    "squirrel": [
+        "agent"
+    ],
+    "raccoon": [
+        "agent"
+    ],
+    "kangaroo": [
+        "agent"
+    ],
+    "wolf": [
+        "agent"
+    ],
+    "tiger": [
+        "agent"
+    ],
+    "lion": [
+        "agent"
+    ],
+    "elephant": [
+        "agent"
+    ],
+    "giraffe": [
+        "agent"
+    ],
+    "zebra": [
+        "agent"
+    ],
+    "monkey": [
+        "agent"
+    ],
+    "gorilla": [
+        "agent"
+    ],
+    "chimpanzee": [
+        "agent"
+    ],
+    "otter": [
+        "agent"
+    ],
+    "beaver": [
+        "agent"
+    ],
+    "penguin": [
+        "agent"
+    ],
+    "seal": [
+        "agent"
+    ],
+    "dolphin": [
+        "agent"
+    ],
+    "whale": [
+        "agent"
+    ],
+    "shark": [
+        "agent"
+    ],
+    "octopus": [
+        "agent"
+    ],
+    "sea turtle": [
+        "agent"
+    ],
+    "eagle": [
+        "agent"
+    ],
+    "hawk": [
+        "agent"
+    ],
+    "falcon": [
+        "agent"
+    ],
+    "owl": [
+        "agent"
+    ],
+    "bat": [
+        "agent"
+    ],
+    "duck": [
+        "agent"
+    ],
+    "goose": [
+        "agent"
+    ],
+    "swan": [
+        "agent"
+    ],
+    "chicken": [
+        "agent"
+    ],
+    "rooster": [
+        "agent"
+    ],
+    "turkey": [
+        "agent"
+    ],
+    "peacock": [
+        "agent"
+    ],
+    "pigeon": [
+        "agent"
+    ],
+    "crow": [
+        "agent"
+    ],
+    "raven": [
+        "agent"
+    ],
+    "parrot": [
+        "agent"
+    ],
+    "macaw": [
+        "agent"
+    ],
+    "puffin": [
+        "agent"
+    ],
+    "robot": [
+        "agent"
+    ],
+    "drone": [
+        "agent"
+    ],
+    "autonomous delivery bot": [
+        "agent"
+    ],
+    "self-driving car": [
+        "agent"
+    ],
+    "robo-dog": [
+        "agent"
+    ],
+    "humanoid robot": [
+        "agent"
+    ],
+    "quadrupedal robot": [
+        "agent"
+    ],
+    "AI-assisted drone": [
+        "agent"
+    ],
+    "autonomous submarine": [
+        "agent"
+    ],
+    "mars rover": [
+        "agent"
+    ],
+    "space probe": [
+        "agent"
+    ],
+    "exoskeleton wearer": [
+        "agent"
+    ],
+    "guide dog": [
+        "agent"
+    ],
+    "herded animals": [
+        "agent"
+    ],
+    "manually controlled drone": [
+        "agent"
+    ],
+    "self-balancing scooter": [
+        "agent"
+    ],
+    "trained falcon": [
+        "agent"
+    ],
+    "racing greyhound": [
+        "agent"
+    ],
+    "circus elephant": [
+        "agent"
+    ],
+    "service horse": [
+        "agent"
+    ],
+    "rescue dog": [
+        "agent"
+    ],
+    "therapy animal": [
+        "agent"
+    ],
+    "falconry bird": [
+        "agent"
+    ],
+    "shepherd dog": [
+        "agent"
+    ],
+    "police horse": [
+        "agent"
+    ],
+    "search-and-rescue drone": [
+        "agent"
+    ],
+    "firefighting robot": [
+        "agent"
+    ],
+    "military drone": [
+        "agent"
+    ],
+    "bomb-detection dog": [
+        "agent"
+    ],
+    "autonomous farming robot": [
+        "agent"
+    ],
+    "warehouse sorting robot": [
+        "agent"
+    ],
+    "surgical robot": [
+        "agent"
+    ],
+    "AI-powered robotic arm": [
+        "agent"
+    ],
+    "bipedal walking robot": [
+        "agent"
+    ],
+    "factory automation robot": [
+        "agent"
+    ],
+    "deep-sea exploration robot": [
+        "agent"
+    ],
+    "quadrupedal military robot": [
+        "agent"
+    ],
+    "robotic vacuum cleaner": [
+        "agent"
+    ],
+    "delivery drone": [
+        "agent"
+    ],
+    "self-driving tractor": [
+        "agent"
+    ],
+    "autonomous lawnmower": [
+        "agent"
+    ],
+    "companion AI robot": [
+        "agent"
+    ],
+    "military exosuit user": [
+        "agent"
+    ],
+    "robotic chef": [
+        "agent"
+    ],
+    "autonomous mining vehicle": [
+        "agent"
+    ],
+    "self-driving bus": [
+        "agent"
+    ],
+    "automated train system": [
+        "agent"
+    ]
+}

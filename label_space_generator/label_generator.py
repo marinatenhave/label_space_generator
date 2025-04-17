@@ -1,7 +1,14 @@
 import torch
-from transformers import BlipProcessor, BlipForConditionalGeneration, AutoTokenizer, AutoModelForTokenClassification, DistilBertForSequenceClassification
+from transformers import (
+    BlipProcessor,
+    BlipForConditionalGeneration,
+    AutoTokenizer,
+    AutoModelForTokenClassification,
+    DistilBertForSequenceClassification,
+)
 from huggingface_hub import snapshot_download
 from PIL import Image
+
 
 class LabelGenerator:
     def __init__(self, device=None):
@@ -31,40 +38,64 @@ class LabelGenerator:
         self.classifier_model = DistilBertForSequenceClassification.from_pretrained(model_dir).to(self.device)
         print("🚀 DistilBERT Model loaded!")
 
-        # Initialize label space
-        self.label_space = {
-            "object": [],
-            "agent": [],
-            "surface": [],
-            "region": []
+        # Initialize label spaces
+        self.reset_scene_space()
+
+    def reset_scene_space(self):
+        """Reset scene-specific label space."""
+        self.scene_label_space = {
+            "object": set(),
+            "agent": set(),
+            "surface": set(),
+            "region": set()
         }
 
-    def step(self, image_path):
-        print(f"\n📷 Processing image: {image_path}")
+    def step(self, image_array):
+        """Process a single image frame and update label spaces."""
+        # 🆕 Reset instance label space at the start of each step
+        self.instance_label_space = {
+            "object": set(),
+            "agent": set(),
+            "surface": set(),
+            "region": set()
+        }
 
         # Generate caption
-        caption = self._generate_caption(image_path)
+        caption = self._generate_caption(image_array)
         print("\n📝 Generated Caption:", caption)
 
         # Extract nouns
         nouns = self._extract_nouns(caption)
 
         # Classify nouns
-        self.label_space = self._classify_nouns(nouns)
+        current_labels = self._classify_nouns(nouns)
 
-        # Print result
-        print("\n🔹 Objects:", self.label_space["object"])
-        print("🔸 Agents:", self.label_space["agent"])
-        print("🟩 Surfaces:", self.label_space["surface"])
-        print("🌍 Regions:", self.label_space["region"])
+        # Update instance label space (current frame only)
+        for category in self.instance_label_space:
+            self.instance_label_space[category].update(current_labels[category])
 
-    def _generate_caption(self, image_path):
-        image = Image.open(image_path).convert("RGB")
+        # Update scene label space (accumulated over scene)
+        for category in self.scene_label_space:
+            self.scene_label_space[category].update(current_labels[category])
+
+        # Print current step result
+        print("\n📸 Instance label space (current image):")
+        for category, labels in self.instance_label_space.items():
+            print(f"{category.capitalize()}: {sorted(labels)}")
+
+        print("\n🗺️ Scene label space (accumulated):")
+        for category, labels in self.scene_label_space.items():
+            print(f"{category.capitalize()}: {sorted(labels)}")
+
+    def _generate_caption(self, image_array):
+        """Generate a caption for the given image array."""
+        image = Image.fromarray(image_array).convert("RGB")
         inputs = self.blip_processor(images=image, return_tensors="pt").to(self.device)
         out = self.blip_model.generate(**inputs, max_length=150, min_length=30)
         return self.blip_processor.decode(out[0], skip_special_tokens=True)
 
     def _extract_nouns(self, caption):
+        """Extract noun phrases from the caption."""
         STOPWORDS = {"the", "a", "an", "that", "this", "these", "those", "with", "on", "in", "of", "at", "by", "for", "to", "and", "is"}
 
         inputs = self.pos_tokenizer(caption, return_tensors="pt", padding=True, truncation=True).to(self.device)
@@ -90,10 +121,12 @@ class LabelGenerator:
                 if current_noun:
                     noun_phrase = " ".join(current_noun).strip()
                     nouns.add(noun_phrase)
+                    # Basic plural cleanup
                     if noun_phrase.endswith("s") and len(noun_phrase) > 3 and not noun_phrase.endswith(("ss", "us", "is", "grass", "glass", "species")):
                         nouns.add(noun_phrase[:-1])
                     current_noun = []
 
+        # Catch any remaining noun phrase
         if current_noun:
             noun_phrase = " ".join(current_noun).strip()
             nouns.add(noun_phrase)
@@ -104,6 +137,10 @@ class LabelGenerator:
         return sorted(nouns)
 
     def _classify_nouns(self, nouns):
+        """Classify nouns into categories."""
+        if not nouns:
+            return {"object": [], "agent": [], "surface": [], "region": []}
+
         inputs = self.classifier_tokenizer(nouns, truncation=True, padding=True, return_tensors="pt").to(self.device)
 
         with torch.no_grad():

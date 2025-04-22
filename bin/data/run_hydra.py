@@ -102,27 +102,24 @@ def _decompose_pose(pose):
     q_wxyz = [q_xyzw[i] for i in [3, 0, 1, 2]]
     return q_wxyz, pose.translation
 
-
-def _run_scene(dataloader, pipeline, max_steps, data_callbacks, label_generator):
-    label_generator.reset_scene_space()  # 🆕 Reset at start of scene
-
-    # 🆕 Reset scene label space at the beginning
+def _run_scene(dataloader, pipeline, max_steps, data_callbacks, label_generator, label_rate=None):
     label_generator.reset_scene_space()
-    
+
+    last_label_timestamp = None
+    min_label_dt_ns = int(1e9 / label_rate) if label_rate else 0
+
     def _step_pipeline(packet):
-        print(f"\n🔄 Processing packet at timestamp: {packet.timestamp}")
+        nonlocal last_label_timestamp
+        current_ts = packet.timestamp
+
+        print(f"\n🔄 Processing packet at timestamp: {current_ts}")
         print(f"🔍 Packet pose: {packet.pose}")
         print(f"🖼️ Packet color shape: {packet.color.shape if hasattr(packet.color, 'shape') else 'No color shape'}")
 
-        # Run label generator (prints inside!)
-        label_generator.step(packet.color)
-
+        # Run Hydra scene graph pipeline at full rate
         rotation, translation = _decompose_pose(packet.pose)
-        print(f"✅ Decomposed rotation: {rotation}")
-        print(f"✅ Decomposed translation: {translation}")
-
         pipeline.step(
-            packet.timestamp,
+            current_ts,
             translation,
             rotation,
             packet.depth,
@@ -130,7 +127,14 @@ def _run_scene(dataloader, pipeline, max_steps, data_callbacks, label_generator)
             packet.color,
             **packet.extras,
         )
-        print("✅ Pipeline step executed.")
+        print("✅ Hydra pipeline step executed.")
+
+        # Run label generator at a throttled rate
+        if last_label_timestamp is None or (current_ts - last_label_timestamp) >= min_label_dt_ns:
+            print("🧠 Running label generator...")
+            label_generator.step(packet.color)
+            last_label_timestamp = current_ts
+            print("✅ Label generator step executed.")
 
     print("🚀 Starting DataLoader run...")
     sdi.DataLoader.run(
@@ -141,14 +145,8 @@ def _run_scene(dataloader, pipeline, max_steps, data_callbacks, label_generator)
         show_progress=True,
         data_callbacks=data_callbacks,
     )
+
     print("✅ Finished running scene, saving pipeline.")
-    pipeline.save()
-    print("✅ Pipeline saved successfully.\n")
-
-    print("\n📊 Final accumulated scene label space:")
-    for category, labels in label_generator.scene_label_space.items():
-        print(f"{category.capitalize()}: {sorted(labels)}")
-
 
 def _resolve_output(output, dataset):
     if output is not None:
@@ -203,7 +201,9 @@ def main():
 @click.option("--use-clip/--no-use-clip", default=True)
 @click.option("--force", "-f", is_flag=True, help="overwrite existing scenes.")
 @click.option("--output", "-o", default=None, type=click.Path())
-def mp3d(dataset_path, visualize, zmq_url, max_steps, use_clip, force, output):
+@click.option("--label-rate", default=None, type=float, help="Throttle label pipeline to LABEL_RATE Hz")
+
+def mp3d(dataset_path, visualize, zmq_url, max_steps, use_clip, force, output, label_rate):
     hydra.set_glog_level(0, 0)
     output = _resolve_output(output, "mp3d")
     dataset_path = _load_dataset_path(dataset_path, "MP3D")
@@ -237,7 +237,8 @@ def mp3d(dataset_path, visualize, zmq_url, max_steps, use_clip, force, output):
                     zmq_url=zmq_url if visualize else None,
                 )
 
-                _run_scene(dataloader, pipeline, max_steps, data_callbacks, label_generator)
+                _run_scene(dataloader, pipeline, max_steps, data_callbacks, label_generator, label_rate)
+
             except Exception:
                 click.secho(f"Pipeline failed for '{scene_path}'", fg="red")
                 click.secho(f"{traceback.format_exc()}", fg="red")
@@ -250,7 +251,9 @@ def mp3d(dataset_path, visualize, zmq_url, max_steps, use_clip, force, output):
 @click.option("--use-clip/--no-use-clip", default=True)
 @click.option("--force", "-f", is_flag=True, help="overwrite existing scenes.")
 @click.option("--output", "-o", default=None, type=click.Path())
-def westpoint(dataset_path, visualize, zmq_url, max_steps, use_clip, force, output):
+@click.option("--rate", default=None, type=float, help="Throttle processing to RATE Hz")
+
+def westpoint(dataset_path, visualize, zmq_url, max_steps, use_clip, force, output, rate):
     hydra.set_glog_level(0, 0)
     output = _resolve_output(output, "westpoint")
     dataset_path = _load_dataset_path(dataset_path, "WESTPOINT")
@@ -329,7 +332,9 @@ def westpoint(dataset_path, visualize, zmq_url, max_steps, use_clip, force, outp
 @click.option("--use-clip/--no-use-clip", default=True)
 @click.option("--force", "-f", is_flag=True, help="overwrite existing scenes.")
 @click.option("--output", "-o", default=None, type=click.Path())
-def beach(dataset_path, visualize, zmq_url, max_steps, use_clip, force, output):
+@click.option("--rate", default=None, type=float, help="Throttle processing to RATE Hz")
+
+def beach(dataset_path, visualize, zmq_url, max_steps, use_clip, force, output, rate):
     hydra.set_glog_level(0, 0)
     output = _resolve_output(output, "beach")
     dataset_path = _load_dataset_path(dataset_path, "BEACH")

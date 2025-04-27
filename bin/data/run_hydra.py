@@ -6,6 +6,7 @@ import shutil
 import signal
 import sys
 import traceback
+import json
 
 import click
 import hydra_python as hydra
@@ -102,39 +103,57 @@ def _decompose_pose(pose):
     q_wxyz = [q_xyzw[i] for i in [3, 0, 1, 2]]
     return q_wxyz, pose.translation
 
-def _run_scene(dataloader, pipeline, max_steps, data_callbacks, label_generator, label_rate=None):
+import threading
+import numpy as np
+
+import threading
+import numpy as np
+
+def _run_scene(dataloader, pipeline, max_steps, data_callbacks, label_generator, label_rate=None, scene_output=None):
     label_generator.reset_scene_space()
 
     last_label_timestamp = None
     min_label_dt_ns = int(1e9 / label_rate) if label_rate else 0
 
+    label_thread_active = False  # 🆕 Track whether label_generator thread is running
+
     def _step_pipeline(packet):
-        nonlocal last_label_timestamp
+        nonlocal last_label_timestamp, label_thread_active
         current_ts = packet.timestamp
 
         print(f"\n🔄 Processing packet at timestamp: {current_ts}")
         print(f"🔍 Packet pose: {packet.pose}")
         print(f"🖼️ Packet color shape: {packet.color.shape if hasattr(packet.color, 'shape') else 'No color shape'}")
 
-        # Run Hydra scene graph pipeline at full rate
+        # 🔁 Run Hydra scene graph pipeline every frame
+        print(f"🧪 Running hydra step at {current_ts}")
         rotation, translation = _decompose_pose(packet.pose)
-        pipeline.step(
-            current_ts,
-            translation,
-            rotation,
-            packet.depth,
-            packet.labels,
-            packet.color,
-            **packet.extras,
-        )
-        print("✅ Hydra pipeline step executed.")
+        # pipeline.step(
+        #     current_ts,
+        #     translation,
+        #     rotation,
+        #     packet.depth,
+        #     packet.labels,
+        #     packet.color,
+        #     **packet.extras,
+        # )
+        # print("✅ Hydra pipeline step executed.")
 
-        # Run label generator at a throttled rate
-        if last_label_timestamp is None or (current_ts - last_label_timestamp) >= min_label_dt_ns:
-            print("🧠 Running label generator...")
-            label_generator.step(packet.color)
+        # 🧵 Run LabelGenerator in the background, only if last one finished
+        if (last_label_timestamp is None or (current_ts - last_label_timestamp) >= min_label_dt_ns) and not label_thread_active:
             last_label_timestamp = current_ts
-            print("✅ Label generator step executed.")
+            label_thread_active = True  # 🔥 Mark a label thread as active
+
+            def label_thread():
+                try:
+                    print(f"🏷️ Running label generator at {current_ts}")
+                    label_generator.step(np.copy(packet.color))
+                finally:
+                    nonlocal label_thread_active
+                    label_thread_active = False  # 🔥 Mark label thread finished
+                    print("✅ Label generator step finished.")
+
+            threading.Thread(target=label_thread, daemon=True).start()
 
     print("🚀 Starting DataLoader run...")
     sdi.DataLoader.run(
@@ -147,6 +166,10 @@ def _run_scene(dataloader, pipeline, max_steps, data_callbacks, label_generator,
     )
 
     print("✅ Finished running scene, saving pipeline.")
+    pipeline.save()
+
+    if scene_output:
+        label_generator.save_scene_label_space(scene_output)
 
 def _resolve_output(output, dataset):
     if output is not None:
@@ -227,6 +250,8 @@ def mp3d(dataset_path, visualize, zmq_url, max_steps, use_clip, force, output, l
                 if scene_output is None:
                     continue
 
+                label_generator.set_autosave_path(scene_output) 
+
                 pipeline = hydra.load_pipeline(
                     sensor,
                     "mp3d",
@@ -238,6 +263,12 @@ def mp3d(dataset_path, visualize, zmq_url, max_steps, use_clip, force, output, l
                 )
 
                 _run_scene(dataloader, pipeline, max_steps, data_callbacks, label_generator, label_rate)
+                label_generator.save_scene_label_space(scene_output)
+
+            except KeyboardInterrupt:
+                click.secho(f"⚠️ KeyboardInterrupt detected during scene '{scene_path.stem}'. Saving partial label space...", fg="yellow")
+                label_generator.save_scene_label_space(scene_output)
+                raise  # re-raise to cleanly quit
 
             except Exception:
                 click.secho(f"Pipeline failed for '{scene_path}'", fg="red")

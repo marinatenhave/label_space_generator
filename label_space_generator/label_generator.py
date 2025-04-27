@@ -8,12 +8,17 @@ from transformers import (
 )
 from huggingface_hub import snapshot_download
 from PIL import Image
+import json
+import os
+from pathlib import Path
 
 
 class LabelGenerator:
     def __init__(self, device=None):
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
         print(f"🚀 Using device: {self.device}")
+
+        self._step_count = 0  # For autosave tracking
 
         # Load BLIP model
         print("🔄 Loading BLIP model...")
@@ -87,6 +92,19 @@ class LabelGenerator:
         for category, labels in self.scene_label_space.items():
             print(f"{category.capitalize()}: {sorted(labels)}")
 
+        # Increment step count
+        self._step_count += 1
+
+        # Autosave every 5 label steps (or however often you want)
+        if self._step_count % 5 == 0:
+            if hasattr(self, "_autosave_path") and self._autosave_path is not None:
+                self.save_scene_label_space(self._autosave_path)
+    
+    def set_autosave_path(self, scene_output_path):
+        """Set the output path for periodic autosaves."""
+        self._autosave_path = scene_output_path
+
+
     def _generate_caption(self, image_array):
         """Generate a caption for the given image array."""
         image = Image.fromarray(image_array).convert("RGB")
@@ -156,3 +174,19 @@ class LabelGenerator:
                     classified_categories[category].append(noun)
 
         return classified_categories
+    
+    def save_scene_label_space(self, scene_output_path):
+        """
+        Save the current scene label space to a JSON file under 
+        scene_output_path/scene_label_spaces/scene_label_space.json.
+        """
+        label_space_dir = Path(scene_output_path) / "scene_label_spaces"
+        label_space_dir.mkdir(parents=True, exist_ok=True)
+
+        output_file = label_space_dir / "scene_label_space.json"
+
+        label_dict = {k: sorted(list(v)) for k, v in self.scene_label_space.items()}
+        with open(output_file, "w") as f:
+            json.dump(label_dict, f, indent=2)
+
+        print(f"💾 Saved scene label space to {output_file}")

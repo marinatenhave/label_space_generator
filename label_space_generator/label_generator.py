@@ -55,9 +55,57 @@ class LabelGenerator:
             "region": set()
         }
 
+    # def step(self, image_array):
+    #     """Process a single image frame and update label spaces."""
+    #     # 🆕 Reset instance label space at the start of each step
+    #     self.instance_label_space = {
+    #         "object": set(),
+    #         "agent": set(),
+    #         "surface": set(),
+    #         "region": set()
+    #     }
+
+    #     # Generate caption
+    #     caption = self._generate_caption(image_array)
+    #     print("\n📝 Generated Caption:", caption)
+
+    #     # Extract nouns
+    #     nouns = self._extract_nouns(caption)
+
+    #     # Classify nouns
+    #     current_labels = self._classify_nouns(nouns)
+
+    #     # Update instance label space (current frame only)
+    #     for category in self.instance_label_space:
+    #         self.instance_label_space[category].update(current_labels[category])
+
+    #     # Update scene label space (accumulated over scene)
+    #     for category in self.scene_label_space:
+    #         self.scene_label_space[category].update(current_labels[category])
+
+    #     # Print current step result
+    #     print("\n📸 Instance label space (current image):")
+    #     for category, labels in self.instance_label_space.items():
+    #         print(f"{category.capitalize()}: {sorted(labels)}")
+
+    #     print("\n🗺️ Scene label space (accumulated):")
+    #     for category, labels in self.scene_label_space.items():
+    #         print(f"{category.capitalize()}: {sorted(labels)}")
+
+    #     # Increment step count
+    #     self._step_count += 1
+
+    #     # Autosave every 5 label steps (or however often you want)
+    #     if self._step_count % 5 == 0:
+    #         if hasattr(self, "_autosave_path") and self._autosave_path is not None:
+    #             self.save_scene_label_space(self._autosave_path)
+
     def step(self, image_array):
         """Process a single image frame and update label spaces."""
-        # 🆕 Reset instance label space at the start of each step
+        import os
+        import yaml
+
+        # 🌟 Reset instance label space at the start of each step
         self.instance_label_space = {
             "object": set(),
             "agent": set(),
@@ -67,7 +115,7 @@ class LabelGenerator:
 
         # Generate caption
         caption = self._generate_caption(image_array)
-        print("\n📝 Generated Caption:", caption)
+        print("\n📜 Generated Caption:", caption)
 
         # Extract nouns
         nouns = self._extract_nouns(caption)
@@ -88,17 +136,64 @@ class LabelGenerator:
         for category, labels in self.instance_label_space.items():
             print(f"{category.capitalize()}: {sorted(labels)}")
 
-        print("\n🗺️ Scene label space (accumulated):")
+        print("\n🗼 Scene label space (accumulated):")
         for category, labels in self.scene_label_space.items():
             print(f"{category.capitalize()}: {sorted(labels)}")
 
         # Increment step count
         self._step_count += 1
 
-        # Autosave every 5 label steps (or however often you want)
-        if self._step_count % 5 == 0:
-            if hasattr(self, "_autosave_path") and self._autosave_path is not None:
-                self.save_scene_label_space(self._autosave_path)
+        # Autosave after every step
+        if hasattr(self, "_autosave_path") and self._autosave_path is not None:
+            self.save_scene_label_space(self._autosave_path)
+
+            # Additional logic to update YAML label space file
+            labelspace_file = os.path.join(os.path.dirname(self._autosave_path), "generated_label_space.yaml")
+            if os.path.exists(labelspace_file):
+                with open(labelspace_file, 'r') as f:
+                    label_data = yaml.safe_load(f)
+            else:
+                label_data = {
+                    "total_semantic_labels": 0,
+                    "dynamic_labels": [],
+                    "object_labels": [],
+                    "surface_places_labels": [],
+                    "label_names": []
+                }
+
+            existing_names = {entry['name']: entry['label'] for entry in label_data['label_names']}
+            current_index = label_data['total_semantic_labels']
+
+            for category, label_set in self.scene_label_space.items():
+                for label in sorted(label_set):
+                    norm_label = label.lower().replace(' ', '_')
+                    if norm_label not in existing_names:
+                        label_data['label_names'].append({
+                            "label": current_index,
+                            "name": norm_label,
+                            "name_descriptive": f"a {label}"
+                        })
+
+                        if category == "object" or category == "agent":
+                            label_data["object_labels"].append(current_index)
+                        elif category == "surface":
+                            label_data["surface_places_labels"].append(current_index)
+                        elif category == "region":
+                            label_data["surface_places_labels"].append(current_index)  # Treat as surface for now
+
+                        if category == "agent":
+                            label_data["dynamic_labels"].append(current_index)
+
+                        existing_names[norm_label] = current_index
+                        current_index += 1
+
+            label_data['total_semantic_labels'] = current_index
+
+            with open(labelspace_file, 'w') as f:
+                yaml.dump(label_data, f, sort_keys=False)
+
+            print(f"📂 Updated label space saved to: {labelspace_file}")
+
     
     def set_autosave_path(self, scene_output_path):
         """Set the output path for periodic autosaves."""

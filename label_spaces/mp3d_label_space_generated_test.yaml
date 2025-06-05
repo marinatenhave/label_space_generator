@@ -1,0 +1,298 @@
+total_semantic_labels: 77
+dynamic_labels:
+- 50
+- 51
+- 52
+object_labels:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+- 11
+- 12
+- 13
+- 14
+- 15
+- 16
+- 17
+- 18
+- 19
+- 20
+- 21
+- 22
+- 23
+- 24
+- 25
+- 26
+- 27
+- 28
+- 29
+- 30
+- 31
+- 32
+- 33
+- 34
+- 35
+- 36
+- 37
+- 38
+- 39
+- 40
+- 41
+- 42
+- 43
+- 44
+- 45
+- 46
+- 47
+- 48
+- 49
+surface_places_labels:
+- 53
+- 54
+- 55
+- 56
+- 57
+- 58
+- 59
+- 60
+- 61
+label_names:
+- label: 0
+  name: background
+  name_descriptive: a background
+- label: 1
+  name: bathrobe
+  name_descriptive: a bathrobe
+- label: 2
+  name: bed
+  name_descriptive: a bed
+- label: 3
+  name: bench
+  name_descriptive: a bench
+- label: 4
+  name: blanket
+  name_descriptive: a blanket
+- label: 5
+  name: canopy
+  name_descriptive: a canopy
+- label: 6
+  name: ceiling_fan
+  name_descriptive: a ceiling fan
+- label: 7
+  name: chair
+  name_descriptive: a chair
+- label: 8
+  name: chairs
+  name_descriptive: a chairs
+- label: 9
+  name: corner
+  name_descriptive: a corner
+- label: 10
+  name: couch
+  name_descriptive: a couch
+- label: 11
+  name: curtain
+  name_descriptive: a curtain
+- label: 12
+  name: desk
+  name_descriptive: a desk
+- label: 13
+  name: dining_room_table
+  name_descriptive: a dining room table
+- label: 14
+  name: door
+  name_descriptive: a door
+- label: 15
+  name: dresser
+  name_descriptive: a dresser
+- label: 16
+  name: fireplace
+  name_descriptive: a fireplace
+- label: 17
+  name: glass_door
+  name_descriptive: a glass door
+- label: 18
+  name: hole
+  name_descriptive: a hole
+- label: 19
+  name: image
+  name_descriptive: a image
+- label: 20
+  name: lamp
+  name_descriptive: a lamp
+- label: 21
+  name: laptop
+  name_descriptive: a laptop
+- label: 22
+  name: mirror
+  name_descriptive: a mirror
+- label: 23
+  name: outside
+  name_descriptive: a outside
+- label: 24
+  name: painting
+  name_descriptive: a painting
+- label: 25
+  name: palm_tree
+  name_descriptive: a palm tree
+- label: 26
+  name: photo
+  name_descriptive: a photo
+- label: 27
+  name: picture
+  name_descriptive: a picture
+- label: 28
+  name: plant
+  name_descriptive: a plant
+- label: 29
+  name: radiator
+  name_descriptive: a radiator
+- label: 30
+  name: refrigerator
+  name_descriptive: a refrigerator
+- label: 31
+  name: screen
+  name_descriptive: a screen
+- label: 32
+  name: shelf
+  name_descriptive: a shelf
+- label: 33
+  name: shower
+  name_descriptive: a shower
+- label: 34
+  name: shower_curtain
+  name_descriptive: a shower curtain
+- label: 35
+  name: shower_curtains
+  name_descriptive: a shower curtains
+- label: 36
+  name: side
+  name_descriptive: a side
+- label: 37
+  name: sink
+  name_descriptive: a sink
+- label: 38
+  name: table
+  name_descriptive: a table
+- label: 39
+  name: television
+  name_descriptive: a television
+- label: 40
+  name: toilet
+  name_descriptive: a toilet
+- label: 41
+  name: towel_rack
+  name_descriptive: a towel rack
+- label: 42
+  name: tree
+  name_descriptive: a tree
+- label: 43
+  name: tub
+  name_descriptive: a tub
+- label: 44
+  name: tv
+  name_descriptive: a tv
+- label: 45
+  name: vase
+  name_descriptive: a vase
+- label: 46
+  name: view
+  name_descriptive: a view
+- label: 47
+  name: wall_mural
+  name_descriptive: a wall mural
+- label: 48
+  name: water
+  name_descriptive: a water
+- label: 49
+  name: window
+  name_descriptive: a window
+- label: 50
+  name: bird
+  name_descriptive: a bird
+- label: 51
+  name: cat
+  name_descriptive: a cat
+- label: 52
+  name: person
+  name_descriptive: a person
+- label: 53
+  name: ceiling
+  name_descriptive: a ceiling
+- label: 54
+  name: floor
+  name_descriptive: a floor
+- label: 55
+  name: foreground
+  name_descriptive: a foreground
+- label: 56
+  name: foreground_area
+  name_descriptive: a foreground area
+- label: 57
+  name: patio_area
+  name_descriptive: a patio area
+- label: 58
+  name: tile_floor
+  name_descriptive: a tile floor
+- label: 59
+  name: wall
+  name_descriptive: a wall
+- label: 60
+  name: wood_floor
+  name_descriptive: a wood floor
+- label: 61
+  name: wood_floors
+  name_descriptive: a wood floors
+- label: 62
+  name: area
+  name_descriptive: a area
+- label: 63
+  name: bathroom
+  name_descriptive: a bathroom
+- label: 64
+  name: building
+  name_descriptive: a building
+- label: 65
+  name: dining_room
+  name_descriptive: a dining room
+- label: 66
+  name: doorway
+  name_descriptive: a doorway
+- label: 67
+  name: hallway
+  name_descriptive: a hallway
+- label: 68
+  name: house
+  name_descriptive: a house
+- label: 69
+  name: living_room
+  name_descriptive: a living room
+- label: 70
+  name: middle
+  name_descriptive: a middle
+- label: 71
+  name: mountain
+  name_descriptive: a mountain
+- label: 72
+  name: mountains
+  name_descriptive: a mountains
+- label: 73
+  name: ocean
+  name_descriptive: a ocean
+- label: 74
+  name: patio
+  name_descriptive: a patio
+- label: 75
+  name: pool
+  name_descriptive: a pool
+- label: 76
+  name: room
+  name_descriptive: a room

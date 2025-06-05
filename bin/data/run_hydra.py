@@ -86,6 +86,7 @@ def _load_dataset_path(dataset_path, env_name=None):
 
 
 def _get_scene_output(output_path, scene_name, force):
+    print("GET SCENE OUTPUT -- only called/happens once")
     scene_output = output_path / scene_name
     if scene_output.exists():
         if not force:
@@ -119,6 +120,18 @@ def _run_scene(dataloader, pipeline, max_steps, data_callbacks, label_generator,
 
     def _step_pipeline(packet):
         nonlocal last_label_timestamp, label_thread_active
+
+        # pipeline = hydra.load_pipeline(
+        #             sensor,
+        #             "mp3d",
+        #             "ade20k_mp3d",
+        #             config_path=_bin_path() / "config",
+        #             output_path=scene_output,
+        #             freeze_global_info=False,
+        #             zmq_url=zmq_url if visualize else None,
+        #         )
+        # POTENTIAL TODO: ADD FUNCTION HERE THAT JUST RELOADS THE LABEL SPACE?
+
         current_ts = packet.timestamp
 
         print(f"\n🔄 Processing packet at timestamp: {current_ts}")
@@ -128,16 +141,17 @@ def _run_scene(dataloader, pipeline, max_steps, data_callbacks, label_generator,
         # 🔁 Run Hydra scene graph pipeline every frame
         print(f"🧪 Running hydra step at {current_ts}")
         rotation, translation = _decompose_pose(packet.pose)
-        # pipeline.step(
-        #     current_ts,
-        #     translation,
-        #     rotation,
-        #     packet.depth,
-        #     packet.labels,
-        #     packet.color,
-        #     **packet.extras,
-        # )
-        # print("✅ Hydra pipeline step executed.")
+        pipeline.step(
+            current_ts,
+            translation,
+            rotation,
+            packet.depth,
+            packet.labels,
+            packet.color,
+            **packet.extras,
+        )
+        print("packet.labels: ", packet.labels)
+        print("✅ Hydra pipeline step executed.")
 
         # 🧵 Run LabelGenerator in the background, only if last one finished
         if (last_label_timestamp is None or (current_ts - last_label_timestamp) >= min_label_dt_ns) and not label_thread_active:
@@ -259,10 +273,11 @@ def mp3d(dataset_path, visualize, zmq_url, max_steps, use_clip, force, output, l
                     config_path=_bin_path() / "config",
                     output_path=scene_output,
                     freeze_global_info=False,
-                    zmq_url=zmq_url if visualize else None,
+                    zmq_url=zmq_url if visualize else None
                 )
-
+                print("RUN_SCENE BEFORE")
                 _run_scene(dataloader, pipeline, max_steps, data_callbacks, label_generator, label_rate)
+                print("RUN_SCENE_AFTER")
                 label_generator.save_scene_label_space(scene_output)
 
             except KeyboardInterrupt:

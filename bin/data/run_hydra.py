@@ -86,7 +86,6 @@ def _load_dataset_path(dataset_path, env_name=None):
 
 
 def _get_scene_output(output_path, scene_name, force):
-    print("GET SCENE OUTPUT -- only called/happens once")
     scene_output = output_path / scene_name
     if scene_output.exists():
         if not force:
@@ -150,7 +149,7 @@ def _run_scene(dataloader, pipeline, max_steps, data_callbacks, label_generator,
             packet.color,
             **packet.extras,
         )
-        print("packet.labels: ", packet.labels)
+        # print("packet.labels: ", packet.labels)
         print("✅ Hydra pipeline step executed.")
 
         # 🧵 Run LabelGenerator in the background, only if last one finished
@@ -265,6 +264,10 @@ def mp3d(dataset_path, visualize, zmq_url, max_steps, use_clip, force, output, l
                     continue
 
                 label_generator.set_autosave_path(scene_output) 
+                label_generator.set_run_info("mp3d", scene_path.stem)
+
+                labelspace_path = hydra.get_config_path() / "label_spaces" / "ade20k_mp3d_label_space.yaml"
+                label_generator.set_hydra_fixed_labelspace_path(labelspace_path)
 
                 pipeline = hydra.load_pipeline(
                     sensor,
@@ -275,9 +278,9 @@ def mp3d(dataset_path, visualize, zmq_url, max_steps, use_clip, force, output, l
                     freeze_global_info=False,
                     zmq_url=zmq_url if visualize else None
                 )
-                print("RUN_SCENE BEFORE")
+                # print("RUN_SCENE BEFORE")
                 _run_scene(dataloader, pipeline, max_steps, data_callbacks, label_generator, label_rate)
-                print("RUN_SCENE_AFTER")
+                # print("RUN_SCENE_AFTER")
                 label_generator.save_scene_label_space(scene_output)
 
             except KeyboardInterrupt:

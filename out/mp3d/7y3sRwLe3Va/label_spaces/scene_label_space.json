@@ -1,0 +1,41 @@
+{
+  "object": [
+    "bed",
+    "chair",
+    "chairs",
+    "couch",
+    "counter",
+    "counter space",
+    "dining room table",
+    "dining table",
+    "door",
+    "fireplace",
+    "lamp",
+    "mirror",
+    "outside",
+    "photo",
+    "picture",
+    "rug",
+    "tv",
+    "view",
+    "window"
+  ],
+  "agent": [
+    "cat",
+    "teddy bear"
+  ],
+  "surface": [
+    "floor",
+    "wall"
+  ],
+  "region": [
+    "dining room",
+    "house",
+    "island",
+    "kitchen",
+    "living room",
+    "lot",
+    "middle",
+    "room"
+  ]
+}

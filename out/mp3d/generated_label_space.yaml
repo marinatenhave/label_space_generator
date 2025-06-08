@@ -1,0 +1,200 @@
+total_semantic_labels: 48
+dynamic_labels:
+- 3
+- 30
+- 40
+object_labels:
+- 0
+- 1
+- 2
+- 3
+- 6
+- 7
+- 8
+- 9
+- 12
+- 15
+- 16
+- 17
+- 18
+- 19
+- 20
+- 24
+- 25
+- 26
+- 28
+- 29
+- 30
+- 31
+- 32
+- 33
+- 35
+- 36
+- 37
+- 39
+- 40
+- 41
+- 42
+- 45
+- 46
+surface_places_labels:
+- 4
+- 5
+- 10
+- 11
+- 13
+- 14
+- 21
+- 22
+- 23
+- 27
+- 34
+- 38
+- 43
+- 44
+- 47
+label_names:
+- label: 0
+  name: counter
+  name_descriptive: a counter
+- label: 1
+  name: door
+  name_descriptive: a door
+- label: 2
+  name: outside
+  name_descriptive: a outside
+- label: 3
+  name: cat
+  name_descriptive: a cat
+- label: 4
+  name: house
+  name_descriptive: a house
+- label: 5
+  name: kitchen
+  name_descriptive: a kitchen
+- label: 6
+  name: chair
+  name_descriptive: a chair
+- label: 7
+  name: lamp
+  name_descriptive: a lamp
+- label: 8
+  name: photo
+  name_descriptive: a photo
+- label: 9
+  name: rug
+  name_descriptive: a rug
+- label: 10
+  name: living_room
+  name_descriptive: a living room
+- label: 11
+  name: room
+  name_descriptive: a room
+- label: 12
+  name: mirror
+  name_descriptive: a mirror
+- label: 13
+  name: floor
+  name_descriptive: a floor
+- label: 14
+  name: wall
+  name_descriptive: a wall
+- label: 15
+  name: couch
+  name_descriptive: a couch
+- label: 16
+  name: fireplace
+  name_descriptive: a fireplace
+- label: 17
+  name: picture
+  name_descriptive: a picture
+- label: 18
+  name: window
+  name_descriptive: a window
+- label: 19
+  name: chairs
+  name_descriptive: a chairs
+- label: 20
+  name: dining_room_table
+  name_descriptive: a dining room table
+- label: 21
+  name: dining_room
+  name_descriptive: a dining room
+- label: 22
+  name: island
+  name_descriptive: a island
+- label: 23
+  name: middle
+  name_descriptive: a middle
+- label: 24
+  name: counter_space
+  name_descriptive: a counter space
+- label: 25
+  name: dining_table
+  name_descriptive: a dining table
+- label: 26
+  name: view
+  name_descriptive: a view
+- label: 27
+  name: lot
+  name_descriptive: a lot
+- label: 28
+  name: bed
+  name_descriptive: a bed
+- label: 29
+  name: tv
+  name_descriptive: a tv
+- label: 30
+  name: teddy_bear
+  name_descriptive: a teddy bear
+- label: 31
+  name: sink
+  name_descriptive: a sink
+- label: 32
+  name: toilet
+  name_descriptive: a toilet
+- label: 33
+  name: toilet_seat
+  name_descriptive: a toilet seat
+- label: 34
+  name: bathroom
+  name_descriptive: a bathroom
+- label: 35
+  name: painting
+  name_descriptive: a painting
+- label: 36
+  name: stove
+  name_descriptive: a stove
+- label: 37
+  name: corner
+  name_descriptive: a corner
+- label: 38
+  name: flooring_area
+  name_descriptive: a flooring area
+- label: 39
+  name: table
+  name_descriptive: a table
+- label: 40
+  name: man
+  name_descriptive: a man
+- label: 41
+  name: counter_top
+  name_descriptive: a counter top
+- label: 42
+  name: refrigerator
+  name_descriptive: a refrigerator
+- label: 43
+  name: walls
+  name_descriptive: a walls
+- label: 44
+  name: cabinet
+  name_descriptive: a cabinet
+- label: 45
+  name: kitchen_door
+  name_descriptive: a kitchen door
+- label: 46
+  name: glass_door
+  name_descriptive: a glass door
+- label: 47
+  name: tile_floor
+  name_descriptive: a tile floor

@@ -160,7 +160,37 @@ def _run_scene(dataloader, pipeline, max_steps, data_callbacks, label_generator,
             def label_thread():
                 try:
                     print(f"🏷️ Running label generator at {current_ts}")
+
+                    label_name_to_id = {}
+                    next_label_id = [1000]  # mutable int so it persists across function calls - set as arbitrary large number
+
+                    def add_new_labels_to_pipeline(pipeline, label_generator):
+                        """Register new labels with the C++ pipeline from the latest frame."""
+                        new_global_labels = set()
+                        new_object_labels = set()
+
+                        for category, labels in label_generator.instance_label_space.items():
+                            for name in labels:
+                                norm = name.lower().replace(" ", "_")
+                                if norm not in label_name_to_id:
+                                    label_id = next_label_id[0]
+                                    label_name_to_id[norm] = label_id
+
+                                    # Register globally for all categories
+                                    pipeline.add_label(label_id, norm)
+                                    new_global_labels.add(norm)
+
+                                    # Only register to mesh segmenter if category is 'object'
+                                    if category == "object":
+                                        pipeline.add_segmenter_label(label_id)
+                                        new_object_labels.add(norm)
+
+                                    print(f"🆕 Registered new label '{norm}' (ID: {label_id}) [category: {category}]")
+                                    next_label_id[0] += 1
+                    
                     label_generator.step(np.copy(packet.color))
+                    add_new_labels_to_pipeline(pipeline, label_generator)
+                    
                 finally:
                     nonlocal label_thread_active
                     label_thread_active = False  # 🔥 Mark label thread finished

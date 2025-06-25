@@ -279,8 +279,6 @@ class LabelGenerator:
 
         print(f"📂 Updated label space saved to: {labelspace_file}")
 
-
-    
     def set_autosave_path(self, scene_output_path):
         """Set the output path for periodic autosaves."""
         self._autosave_path = scene_output_path

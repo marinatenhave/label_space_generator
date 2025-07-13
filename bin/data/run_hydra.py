@@ -110,34 +110,23 @@ import threading
 import numpy as np
 
 def _run_scene(dataloader, pipeline, max_steps, data_callbacks, label_generator, label_rate=None, scene_output=None):
-    label_generator.reset_scene_space()
 
     last_label_timestamp = None
     min_label_dt_ns = int(1e9 / label_rate) if label_rate else 0
+    label_thread_active = False
 
-    label_thread_active = False  # 🆕 Track whether label_generator thread is running
+    current_index = sum(len(v) for v in label_generator.scene_label_space.values()) # current index = length of the original label space
+    print(f"🔢 Initialized current_index to {current_index} based on loaded scene label space.")
 
     def _step_pipeline(packet):
-        nonlocal last_label_timestamp, label_thread_active
-
-        # pipeline = hydra.load_pipeline(
-        #             sensor,
-        #             "mp3d",
-        #             "ade20k_mp3d",
-        #             config_path=_bin_path() / "config",
-        #             output_path=scene_output,
-        #             freeze_global_info=False,
-        #             zmq_url=zmq_url if visualize else None,
-        #         )
-        # POTENTIAL TODO: ADD FUNCTION HERE THAT JUST RELOADS THE LABEL SPACE?
+        nonlocal last_label_timestamp, label_thread_active, current_index
 
         current_ts = packet.timestamp
-
         print(f"\n🔄 Processing packet at timestamp: {current_ts}")
         print(f"🔍 Packet pose: {packet.pose}")
         print(f"🖼️ Packet color shape: {packet.color.shape if hasattr(packet.color, 'shape') else 'No color shape'}")
 
-        # 🔁 Run Hydra scene graph pipeline every frame
+        # 🔁 Run Hydra step
         print(f"🧪 Running hydra step at {current_ts}")
         rotation, translation = _decompose_pose(packet.pose)
         pipeline.step(
@@ -149,51 +138,30 @@ def _run_scene(dataloader, pipeline, max_steps, data_callbacks, label_generator,
             packet.color,
             **packet.extras,
         )
-        # print("packet.labels: ", packet.labels)
         print("✅ Hydra pipeline step executed.")
 
-        # 🧵 Run LabelGenerator in the background, only if last one finished
+        # 🧵 Launch label thread if needed
         if (last_label_timestamp is None or (current_ts - last_label_timestamp) >= min_label_dt_ns) and not label_thread_active:
             last_label_timestamp = current_ts
-            label_thread_active = True  # 🔥 Mark a label thread as active
+            label_thread_active = True
 
             def label_thread():
+                nonlocal label_thread_active, current_index
                 try:
                     print(f"🏷️ Running label generator at {current_ts}")
+                    new_labels = label_generator.step(np.copy(packet.color))
 
-                    label_name_to_id = {}
-                    next_label_id = [1000]  # mutable int so it persists across function calls - set as arbitrary large number
+                    for norm, category in new_labels:
+                        pipeline.add_label(current_index, norm)
+                        print(f"🆕 Registered new label '{norm}' (ID: {current_index}) [category: {category}]")
 
-                    def add_new_labels_to_pipeline(pipeline, label_generator):
-                        """Register new labels with the C++ pipeline from the latest frame."""
-                        new_global_labels = set()
-                        new_object_labels = set()
+                        if category == "object":
+                            pipeline.add_segmenter_label(current_index)
 
-                        for category, labels in label_generator.instance_label_space.items():
-                            for name in labels:
-                                norm = name.lower().replace(" ", "_")
-                                if norm not in label_name_to_id:
-                                    label_id = next_label_id[0]
-                                    label_name_to_id[norm] = label_id
+                        current_index += 1
 
-                                    # Register globally for all categories
-                                    pipeline.add_label(label_id, norm)
-                                    new_global_labels.add(norm)
-
-                                    # Only register to mesh segmenter if category is 'object'
-                                    if category == "object":
-                                        pipeline.add_segmenter_label(label_id)
-                                        new_object_labels.add(norm)
-
-                                    print(f"🆕 Registered new label '{norm}' (ID: {label_id}) [category: {category}]")
-                                    next_label_id[0] += 1
-                    
-                    label_generator.step(np.copy(packet.color))
-                    add_new_labels_to_pipeline(pipeline, label_generator)
-                    
                 finally:
-                    nonlocal label_thread_active
-                    label_thread_active = False  # 🔥 Mark label thread finished
+                    label_thread_active = False
                     print("✅ Label generator step finished.")
 
             threading.Thread(target=label_thread, daemon=True).start()
@@ -275,7 +243,8 @@ def mp3d(dataset_path, visualize, zmq_url, max_steps, use_clip, force, output, l
     dataset_path = _load_dataset_path(dataset_path, "MP3D")
     scenes = [x for x in dataset_path.iterdir() if x.is_dir()]
 
-    label_generator = LabelGenerator()  # 🆕 Instantiate once here
+    labelspace_path = hydra.get_config_path() / "label_spaces" / "ade20k_mp3d_label_space.yaml"
+    label_generator = LabelGenerator(fixed_labelspace_path=labelspace_path)
 
     signal.signal(signal.SIGINT, signal.SIG_DFL)
 
@@ -295,9 +264,6 @@ def mp3d(dataset_path, visualize, zmq_url, max_steps, use_clip, force, output, l
 
                 label_generator.set_autosave_path(scene_output) 
                 label_generator.set_run_info("mp3d", scene_path.stem)
-
-                labelspace_path = hydra.get_config_path() / "label_spaces" / "ade20k_mp3d_label_space.yaml"
-                label_generator.set_hydra_fixed_labelspace_path(labelspace_path)
 
                 pipeline = hydra.load_pipeline(
                     sensor,

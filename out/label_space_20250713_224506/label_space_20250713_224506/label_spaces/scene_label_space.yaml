@@ -1,0 +1,157 @@
+total_semantic_labels: 38
+dynamic_labels: []
+object_labels:
+- 0
+- 4
+- 5
+- 10
+- 11
+- 12
+- 13
+- 14
+- 15
+- 21
+- 22
+- 23
+- 24
+- 25
+- 28
+- 29
+- 30
+- 31
+- 32
+surface_places_labels:
+- 1
+- 2
+- 3
+- 6
+- 7
+- 8
+- 9
+- 16
+- 17
+- 18
+- 19
+- 20
+- 26
+- 27
+- 33
+- 34
+- 35
+- 36
+- 37
+label_names:
+- label: 0
+  name: one
+  name_descriptive: a one
+- label: 1
+  name: building
+  name_descriptive: a building
+- label: 2
+  name: buildings
+  name_descriptive: a buildings
+- label: 3
+  name: street
+  name_descriptive: a street
+- label: 4
+  name: fire_hydrant
+  name_descriptive: a fire hydrant
+- label: 5
+  name: side
+  name_descriptive: a side
+- label: 6
+  name: dirt_road
+  name_descriptive: a dirt road
+- label: 7
+  name: road
+  name_descriptive: a road
+- label: 8
+  name: wood
+  name_descriptive: a wood
+- label: 9
+  name: woods
+  name_descriptive: a woods
+- label: 10
+  name: background
+  name_descriptive: a background
+- label: 11
+  name: bench
+  name_descriptive: a bench
+- label: 12
+  name: bushe
+  name_descriptive: a bushe
+- label: 13
+  name: bushes
+  name_descriptive: a bushes
+- label: 14
+  name: rock
+  name_descriptive: a rock
+- label: 15
+  name: tree
+  name_descriptive: a tree
+- label: 16
+  name: foreground
+  name_descriptive: a foreground
+- label: 17
+  name: grass
+  name_descriptive: a grass
+- label: 18
+  name: rocks
+  name_descriptive: a rocks
+- label: 19
+  name: field
+  name_descriptive: a field
+- label: 20
+  name: middle
+  name_descriptive: a middle
+- label: 21
+  name: chair
+  name_descriptive: a chair
+- label: 22
+  name: couch
+  name_descriptive: a couch
+- label: 23
+  name: lamp
+  name_descriptive: a lamp
+- label: 24
+  name: painting
+  name_descriptive: a painting
+- label: 25
+  name: table
+  name_descriptive: a table
+- label: 26
+  name: living_room
+  name_descriptive: a living room
+- label: 27
+  name: room
+  name_descriptive: a room
+- label: 28
+  name: curtain
+  name_descriptive: a curtain
+- label: 29
+  name: mirror
+  name_descriptive: a mirror
+- label: 30
+  name: sink
+  name_descriptive: a sink
+- label: 31
+  name: tub
+  name_descriptive: a tub
+- label: 32
+  name: window
+  name_descriptive: a window
+- label: 33
+  name: floor
+  name_descriptive: a floor
+- label: 34
+  name: wall
+  name_descriptive: a wall
+- label: 35
+  name: bathroom
+  name_descriptive: a bathroom
+- label: 36
+  name: canopy_bed
+  name_descriptive: a canopy bed
+- label: 37
+  name: bedroom
+  name_descriptive: a bedroom

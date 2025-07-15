@@ -1,0 +1,73 @@
+total_semantic_labels: 17
+dynamic_labels: []
+object_labels:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 7
+- 8
+- 9
+- 10
+- 11
+surface_places_labels:
+- 5
+- 6
+- 12
+- 13
+- 14
+- 15
+- 16
+label_names:
+- label: 0
+  name: chair
+  name_descriptive: a chair
+- label: 1
+  name: couch
+  name_descriptive: a couch
+- label: 2
+  name: lamp
+  name_descriptive: a lamp
+- label: 3
+  name: painting
+  name_descriptive: a painting
+- label: 4
+  name: table
+  name_descriptive: a table
+- label: 5
+  name: living_room
+  name_descriptive: a living room
+- label: 6
+  name: room
+  name_descriptive: a room
+- label: 7
+  name: curtain
+  name_descriptive: a curtain
+- label: 8
+  name: mirror
+  name_descriptive: a mirror
+- label: 9
+  name: sink
+  name_descriptive: a sink
+- label: 10
+  name: tub
+  name_descriptive: a tub
+- label: 11
+  name: window
+  name_descriptive: a window
+- label: 12
+  name: floor
+  name_descriptive: a floor
+- label: 13
+  name: wall
+  name_descriptive: a wall
+- label: 14
+  name: bathroom
+  name_descriptive: a bathroom
+- label: 15
+  name: canopy_bed
+  name_descriptive: a canopy bed
+- label: 16
+  name: bedroom
+  name_descriptive: a bedroom

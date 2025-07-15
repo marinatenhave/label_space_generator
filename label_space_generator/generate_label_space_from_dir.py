@@ -31,19 +31,21 @@ def main():
     parser.add_argument("--fixed-labelspace", default=None, help="Optional path to fixed label space YAML")
     args = parser.parse_args()
 
-    # Auto-generate unique name if dataset/scene not provided
-    if args.dataset is None or args.scene is None:
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        auto_id = f"label_space_{timestamp}"
-        dataset_name = dataset_scene = auto_id
-        print(f"🆕 No dataset/scene specified — using auto-generated ID: {auto_id}")
+    dataset_name = args.dataset if args.dataset else None
+    scene_name = args.scene if args.scene else None
+
+    if not dataset_name and not scene_name:
+        print("🆕 No dataset or scene specified — using timestamp fallback inside LabelGenerator.")
+    elif dataset_name and not scene_name:
+        print(f"🆕 Only dataset specified: '{dataset_name}' → scene fallback handled inside LabelGenerator.")
+    elif scene_name and not dataset_name:
+        print(f"🆕 Only scene specified: '{scene_name}' → dataset fallback handled inside LabelGenerator.")
     else:
-        dataset_name = args.dataset
-        dataset_scene = args.scene
+        print(f"🧭 Using dataset = '{dataset_name}', scene = '{scene_name}'")
 
     # Initialize LabelGenerator
     generator = LabelGenerator(fixed_labelspace_path=args.fixed_labelspace)
-    generator.set_run_info(dataset_name=dataset_name, scene_name=dataset_scene)
+    generator.set_run_info(dataset_name=dataset_name, scene_name=scene_name)
 
     # Process all images
     image_filenames = sorted(f for f in os.listdir(args.image_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg')))

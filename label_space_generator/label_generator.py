@@ -50,6 +50,9 @@ class LabelGenerator:
         if fixed_labelspace_path:
             self._fixed_labelspace_path = fixed_labelspace_path
             self.load_scene_space_from_yaml(fixed_labelspace_path)
+            self._fixed_scene_space = {
+                k: set(v) for k, v in self.scene_label_space.items()
+            }  # 🧠 Store fixed labelspace copy
         else:
             self.reset_scene_space()
 
@@ -112,13 +115,13 @@ class LabelGenerator:
         }
     
     def _update_labelspace_yaml(self, labelspace_path, newly_added_labels=None):
-        """Update a label space YAML file (fixed or generated) with scene_label_space."""
+        """Update a label space YAML file with the full scene_label_space."""
         import yaml
-        import pathlib
+        from pathlib import Path
 
-        labelspace_file = pathlib.Path(labelspace_path)
+        labelspace_file = Path(labelspace_path)
 
-        # 🌱 Create new file if it doesn't exist
+        # Load or initialize YAML structure
         if not labelspace_file.exists():
             print(f"📄 YAML file not found — creating new one at: {labelspace_file}")
             label_data = {
@@ -130,43 +133,29 @@ class LabelGenerator:
             }
         else:
             with open(labelspace_file, 'r') as f:
-                label_data = yaml.safe_load(f)
+                label_data = yaml.safe_load(f) or {}
 
-            if label_data is None:
-                print("⚠️ YAML loaded as None — initializing empty structure.")
-                label_data = {
-                    "total_semantic_labels": 0,
-                    "dynamic_labels": [],
-                    "object_labels": [],
-                    "surface_places_labels": [],
-                    "label_names": []
-                }
+            # Sanity check / initialize structure if missing
+            for field in ["total_semantic_labels", "dynamic_labels", "object_labels", "surface_places_labels", "label_names"]:
+                if field not in label_data:
+                    label_data[field] = [] if field != "total_semantic_labels" else 0
 
-        # Build existing name → label index map
-        existing_names = {entry['name']: entry['label'] for entry in label_data.get('label_names', [])}
-        current_index = label_data.get('total_semantic_labels', len(existing_names))
+        # Build name-to-label map
+        existing_names = {entry['name']: entry['label'] for entry in label_data['label_names']}
+        current_index = label_data['total_semantic_labels']
 
-        # Sanity init
-        for field in ["object_labels", "surface_places_labels", "dynamic_labels", "label_names"]:
-            if field not in label_data:
-                label_data[field] = []
-
-        if newly_added_labels is None:
-            # Fall back to full scene_label_space (legacy case)
-            label_source = [
-                (label.lower().replace(" ", "_"), category)
-                for category, label_set in self.scene_label_space.items()
-                for label in label_set
-            ]
-        else:
-            label_source = newly_added_labels
+        # ✅ Always reflect the full scene_label_space (not just newly added)
+        label_source = [
+            (label.lower().replace(" ", "_"), category)
+            for category, label_set in self.scene_label_space.items()
+            for label in label_set
+        ]
 
         for norm_label, category in label_source:
             if norm_label in existing_names:
-                continue
+                continue  # already recorded in YAML
 
             print(f"💡 Writing new label to YAML: {norm_label} ({category})")
-
             label_data["label_names"].append({
                 "label": current_index,
                 "name": norm_label,
@@ -185,13 +174,12 @@ class LabelGenerator:
 
         label_data["total_semantic_labels"] = current_index
 
-        # Ensure directory exists
-        labelspace_file.parent.mkdir(parents=True, exist_ok=True)
-
+        # Save to file
         with open(labelspace_file, 'w') as f:
             yaml.dump(label_data, f, sort_keys=False)
 
-        print(f"✅ Label space updated at: {labelspace_file}")
+        print(f"✅ Label space YAML saved to: {labelspace_file}")
+
 
     def step(self, image_array):
         """Process a single image frame and update label spaces."""
@@ -260,18 +248,42 @@ class LabelGenerator:
         if hasattr(self, "_autosave_path") and self._autosave_path is not None:
             self.save_scene_label_space_json(self._autosave_path)
 
-        # ✏️ Update Hydra fixed labelspace
-        if hasattr(self, "_fixed_labelspace_path") and self._fixed_labelspace_path is not None:
-            self._update_labelspace_yaml(self._fixed_labelspace_path, newly_added_labels)
+        # # ✏️ Update Hydra fixed labelspace
+        # if hasattr(self, "_fixed_labelspace_path") and self._fixed_labelspace_path is not None:
+        #     print("updating fixed labelspace??")
+        #     self._update_labelspace_yaml(self._fixed_labelspace_path, newly_added_labels)
 
         # ✏️ Update per-scene generated labelspace
-        repo_root = pathlib.Path(__file__).absolute().parent.parent
-        labelspace_dir = repo_root / "label_spaces"
-        labelspace_dir.mkdir(parents=True, exist_ok=True)
-        generated_labelspace_file = labelspace_dir / f"{self._dataset_name}_{self._scene_name}_label_space_generated.yaml"
-        self._update_labelspace_yaml(generated_labelspace_file, newly_added_labels)
+        from datetime import datetime
+
+        out_root = Path(__file__).resolve().parent.parent / "out"
+
+        if self._dataset_name and self._scene_name:
+            # Case 1: both dataset and scene
+            labelspace_path = out_root / self._dataset_name / self._scene_name / "scene_label_space.yaml"
+
+        elif self._dataset_name and not self._scene_name:
+            # Case 2: dataset only
+            labelspace_path = out_root / self._dataset_name / "general" / "scene_label_space.yaml"
+
+        elif self._scene_name and not self._dataset_name:
+            # Case 3: scene only
+            labelspace_path = out_root / "general" / f"scene_label_space_{self._scene_name}.yaml"
+
+        else:
+            # Case 4: neither dataset nor scene
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            labelspace_path = out_root / "general" / f"scene_label_space_{timestamp}.yaml"
+
+
+        # 💾 Ensure parent directory exists
+        labelspace_path.parent.mkdir(parents=True, exist_ok=True)
+
+        # 📝 Write label space YAML
+        self._update_labelspace_yaml(labelspace_path, newly_added_labels)
 
         return newly_added_labels
+
 
     def set_autosave_path(self, scene_output_path):
         """Set the output path for periodic autosaves."""

@@ -1,0 +1,445 @@
+enable_reconstruction: true
+enable_lcd: false
+enable_places: true
+timing_disabled: false
+disable_timer_output: true
+enable_pgmo_logging: true
+default_verbosity: 1
+default_num_threads: -1
+store_visualization_details: false
+map_window:
+  type: spatial
+  max_radius_m: 8
+label_names:
+  - label: 0
+    name: void
+  - label: 1
+    name: wall
+  - label: 2
+    name: floor
+  - label: 3
+    name: chair
+  - label: 4
+    name: door
+  - label: 5
+    name: table
+  - label: 6
+    name: picture
+  - label: 7
+    name: cabinet
+  - label: 8
+    name: cushion
+  - label: 9
+    name: window
+  - label: 10
+    name: sofa
+  - label: 11
+    name: bed
+  - label: 12
+    name: curtain
+  - label: 13
+    name: chest_of_drawers
+  - label: 14
+    name: plant
+  - label: 15
+    name: sink
+  - label: 16
+    name: stairs
+  - label: 17
+    name: ceiling
+  - label: 18
+    name: toilet
+  - label: 19
+    name: stool
+  - label: 20
+    name: towel
+  - label: 21
+    name: mirror
+  - label: 22
+    name: tv_monitor
+  - label: 23
+    name: shower
+  - label: 24
+    name: column
+  - label: 25
+    name: bathtub
+  - label: 26
+    name: counter
+  - label: 27
+    name: fireplace
+  - label: 28
+    name: lighting
+  - label: 29
+    name: railing
+  - label: 30
+    name: shelving
+  - label: 31
+    name: blinds
+  - label: 32
+    name: seating
+  - label: 33
+    name: board_panel
+  - label: 34
+    name: outside
+  - label: 35
+    name: cat
+  - label: 36
+    name: house
+  - label: 37
+    name: kitchen
+  - label: 38
+    name: lamp
+  - label: 39
+    name: photo
+  - label: 40
+    name: rug
+  - label: 41
+    name: living_room
+  - label: 42
+    name: room
+  - label: 44
+    name: couch
+  - label: 46
+    name: chairs
+  - label: 47
+    name: dining_room_table
+  - label: 48
+    name: dining_room
+  - label: 49
+    name: island
+  - label: 50
+    name: middle
+  - label: 51
+    name: counter_space
+  - label: 52
+    name: dining_table
+  - label: 53
+    name: view
+  - label: 54
+    name: lot
+  - label: 55
+    name: tv
+  - label: 56
+    name: teddy_bear
+  - label: 57
+    name: toilet_seat
+  - label: 58
+    name: bathroom
+  - label: 59
+    name: painting
+  - label: 60
+    name: stove
+  - label: 61
+    name: corner
+  - label: 62
+    name: flooring_area
+  - label: 63
+    name: man
+  - label: 64
+    name: counter_top
+  - label: 65
+    name: refrigerator
+  - label: 66
+    name: walls
+  - label: 68
+    name: kitchen_door
+  - label: 69
+    name: glass_door
+  - label: 70
+    name: tile_floor
+  - label: 71
+    name: drawer
+  - label: 72
+    name: drawers
+  - label: 73
+    name: cabinets
+  - label: 74
+    name: dishwasher
+  - label: 75
+    name: hole
+  - label: 76
+    name: window_repairer
+  - label: 77
+    name: painter
+  - label: 78
+    name: camera
+  - label: 79
+    name: reflection
+  - label: 80
+    name: window_sill
+  - label: 81
+    name: background
+  - label: 82
+    name: back
+  - label: 83
+    name: desk
+  - label: 84
+    name: clock
+  - label: 85
+    name: vase
+  - label: 86
+    name: piano
+  - label: 87
+    name: dog
+  - label: 88
+    name: foreground
+  - label: 89
+    name: doorway
+  - label: 90
+    name: hammer
+  - label: 91
+    name: staircase
+  - label: 93
+    name: person
+  - label: 94
+    name: home
+  - label: 95
+    name: living_room_area
+  - label: 97
+    name: piece
+  - label: 98
+    name: coffee_table
+  - label: 99
+    name: television
+  - label: 100
+    name: beds
+  - label: 101
+    name: hallway
+  - label: 102
+    name: animal
+  - label: 103
+    name: animals
+  - label: 104
+    name: people
+  - label: 105
+    name: toilet_paper_roll
+  - label: 106
+    name: flower
+  - label: 107
+    name: flowers
+  - label: 108
+    name: cloud
+  - label: 109
+    name: hand
+  - label: 110
+    name: plane
+  - label: 111
+    name: ground
+  - label: 112
+    name: bench
+  - label: 113
+    name: pillow
+  - label: 114
+    name: paper
+  - label: 115
+    name: side
+  - label: 116
+    name: step
+  - label: 117
+    name: tape
+  - label: 118
+    name: steps
+  - label: 119
+    name: building
+  - label: 120
+    name: bedroom
+  - label: 121
+    name: pillows
+  - label: 122
+    name: sheet
+  - label: 123
+    name: sheets
+  - label: 124
+    name: pictures
+  - label: 125
+    name: comforter
+  - label: 126
+    name: side_table
+  - label: 127
+    name: tub
+  - label: 128
+    name: entrance_way
+  - label: 129
+    name: bike
+  - label: 130
+    name: headboard
+  - label: 131
+    name: tree
+  - label: 132
+    name: lawn
+  - label: 133
+    name: yard
+  - label: 134
+    name: handle
+  - label: 135
+    name: shower_curtain
+  - label: 136
+    name: vanity
+  - label: 137
+    name: insulation_material
+  - label: 138
+    name: wood
+  - label: 139
+    name: insulation
+  - label: 140
+    name: pipe
+  - label: 141
+    name: pipes
+  - label: 142
+    name: insulation_covering
+  - label: 143
+    name: ladder
+  - label: 144
+    name: board
+  - label: 145
+    name: boards
+  - label: 146
+    name: insulations
+  - label: 147
+    name: worker
+  - label: 148
+    name: cardboard
+  - label: 149
+    name: pieces
+  - label: 150
+    name: top
+  - label: 151
+    name: pallet
+  - label: 152
+    name: left
+  - label: 153
+    name: drywall
+  - label: 154
+    name: wood_panel
+  - label: 155
+    name: wood_panels
+  - label: 156
+    name: place
+  - label: 157
+    name: light
+  - label: 159
+    name: curtains
+  - label: 160
+    name: rail
+  - label: 161
+    name: horse
+  - label: 162
+    name: chain
+  - label: 163
+    name: closet
+  - label: 164
+    name: shelf
+  - label: 165
+    name: marble_floor
+  - label: 167
+    name: hallway_way
+  - label: 168
+    name: book
+  - label: 169
+    name: street
+  - label: 170
+    name: carpet
+  - label: 171
+    name: snowboard
+  - label: 172
+    name: slope
+  - label: 174
+    name: door_handle
+  - label: 175
+    name: window_handle
+  - label: 176
+    name: door_way
+  - label: 177
+    name: stair_rail
+log_path: /home/jared/development/marina/label_space_generator/out/mp3d/7y3sRwLe3Va
+log_timing_incrementally: false
+timing_stats_name: timing_stats.csv
+timing_suffix: _timing_raw.csv
+log_raw_timers_to_single_dir: false
+robot_frame: base_link
+odom_frame: odom
+map_frame: map
+layers:
+  AGENTS:
+    layer: 2
+    partition: 0
+  BUILDINGS:
+    layer: 5
+    partition: 0
+  MESH_PLACES:
+    layer: 3
+    partition: 1
+  OBJECTS:
+    layer: 2
+    partition: 0
+  PLACES:
+    layer: 3
+    partition: 0
+  ROOMS:
+    layer: 4
+    partition: 0
+total_semantic_labels: 39
+semantic_colormap_file: ""
+semantic_label_remap_filepath: ""
+dynamic_labels:
+  []
+invalid_labels:
+  - 0
+object_labels:
+  - 3
+  - 5
+  - 6
+  - 7
+  - 8
+  - 10
+  - 11
+  - 12
+  - 13
+  - 14
+  - 15
+  - 18
+  - 19
+  - 20
+  - 21
+  - 22
+  - 23
+  - 25
+  - 27
+  - 28
+  - 30
+  - 31
+  - 32
+  - 33
+  - 34
+  - 35
+  - 36
+  - 37
+surface_places_labels:
+  - 2
+  - 16
+ground_labels:
+  []
+semantic_layers:
+  - OBJECTS
+  - MESH_PLACES
+sensors:
+  camera:
+    min_range: 0.1
+    max_range: 5
+    extrinsics:
+      type: param
+      body_R_sensor:
+        w: 1
+        x: 0
+        y: 0
+        z: 0
+      body_p_sensor:
+        - 0
+        - 0
+        - 0
+    width: 640
+    height: 480
+    cx: 320
+    cy: 240
+    fx: 320
+    fy: 320

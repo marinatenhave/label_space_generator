@@ -1,0 +1,704 @@
+total_semantic_labels: 172
+dynamic_labels:
+- 31
+- 54
+- 61
+- 74
+- 84
+- 89
+- 97
+- 98
+- 99
+- 142
+- 156
+object_labels:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+- 11
+- 12
+- 13
+- 14
+- 15
+- 16
+- 17
+- 18
+- 19
+- 20
+- 21
+- 22
+- 23
+- 24
+- 25
+- 26
+- 27
+- 28
+- 29
+- 30
+- 31
+- 36
+- 37
+- 38
+- 42
+- 43
+- 44
+- 45
+- 49
+- 50
+- 51
+- 53
+- 54
+- 55
+- 57
+- 58
+- 59
+- 61
+- 62
+- 63
+- 65
+- 66
+- 68
+- 69
+- 70
+- 71
+- 72
+- 73
+- 74
+- 75
+- 76
+- 78
+- 79
+- 80
+- 81
+- 82
+- 83
+- 84
+- 87
+- 89
+- 90
+- 91
+- 92
+- 93
+- 94
+- 95
+- 97
+- 98
+- 99
+- 100
+- 101
+- 102
+- 103
+- 104
+- 105
+- 107
+- 108
+- 109
+- 110
+- 111
+- 112
+- 116
+- 117
+- 118
+- 119
+- 120
+- 121
+- 122
+- 124
+- 125
+- 126
+- 129
+- 130
+- 131
+- 134
+- 135
+- 136
+- 138
+- 139
+- 140
+- 141
+- 142
+- 143
+- 144
+- 145
+- 146
+- 147
+- 152
+- 153
+- 154
+- 155
+- 156
+- 157
+- 158
+- 159
+- 163
+- 166
+- 168
+- 169
+- 170
+- 171
+surface_places_labels:
+- 32
+- 33
+- 34
+- 35
+- 39
+- 40
+- 41
+- 46
+- 47
+- 48
+- 52
+- 56
+- 60
+- 64
+- 67
+- 77
+- 85
+- 86
+- 88
+- 96
+- 106
+- 113
+- 114
+- 115
+- 123
+- 127
+- 128
+- 132
+- 133
+- 137
+- 148
+- 149
+- 150
+- 151
+- 160
+- 161
+- 162
+- 164
+- 165
+- 167
+label_names:
+- label: 0
+  name: plant
+  name_descriptive: a plant
+- label: 1
+  name: clothes
+  name_descriptive: a clothes
+- label: 2
+  name: door
+  name_descriptive: a door
+- label: 3
+  name: chair
+  name_descriptive: a chair
+- label: 4
+  name: objects
+  name_descriptive: a objects
+- label: 5
+  name: chest_of_drawers
+  name_descriptive: a chest of drawers
+- label: 6
+  name: appliances
+  name_descriptive: a appliances
+- label: 7
+  name: cushion
+  name_descriptive: a cushion
+- label: 8
+  name: furniture
+  name_descriptive: a furniture
+- label: 9
+  name: blinds
+  name_descriptive: a blinds
+- label: 10
+  name: cabinet
+  name_descriptive: a cabinet
+- label: 11
+  name: curtain
+  name_descriptive: a curtain
+- label: 12
+  name: toilet
+  name_descriptive: a toilet
+- label: 13
+  name: bed
+  name_descriptive: a bed
+- label: 14
+  name: towel
+  name_descriptive: a towel
+- label: 15
+  name: shelving
+  name_descriptive: a shelving
+- label: 16
+  name: board_panel
+  name_descriptive: a board panel
+- label: 17
+  name: bathtub
+  name_descriptive: a bathtub
+- label: 18
+  name: counter
+  name_descriptive: a counter
+- label: 19
+  name: outside
+  name_descriptive: a outside
+- label: 20
+  name: table
+  name_descriptive: a table
+- label: 21
+  name: shower
+  name_descriptive: a shower
+- label: 22
+  name: mirror
+  name_descriptive: a mirror
+- label: 23
+  name: fireplace
+  name_descriptive: a fireplace
+- label: 24
+  name: seating
+  name_descriptive: a seating
+- label: 25
+  name: picture
+  name_descriptive: a picture
+- label: 26
+  name: sofa
+  name_descriptive: a sofa
+- label: 27
+  name: stool
+  name_descriptive: a stool
+- label: 28
+  name: tv_monitor
+  name_descriptive: a tv monitor
+- label: 29
+  name: lighting
+  name_descriptive: a lighting
+- label: 30
+  name: sink
+  name_descriptive: a sink
+- label: 31
+  name: cat
+  name_descriptive: a cat
+- label: 32
+  name: stairs
+  name_descriptive: a stairs
+- label: 33
+  name: floor
+  name_descriptive: a floor
+- label: 34
+  name: kitchen
+  name_descriptive: a kitchen
+- label: 35
+  name: house
+  name_descriptive: a house
+- label: 36
+  name: photo
+  name_descriptive: a photo
+- label: 37
+  name: rug
+  name_descriptive: a rug
+- label: 38
+  name: lamp
+  name_descriptive: a lamp
+- label: 39
+  name: room
+  name_descriptive: a room
+- label: 40
+  name: living_room
+  name_descriptive: a living room
+- label: 41
+  name: wall
+  name_descriptive: a wall
+- label: 42
+  name: window
+  name_descriptive: a window
+- label: 43
+  name: couch
+  name_descriptive: a couch
+- label: 44
+  name: chairs
+  name_descriptive: a chairs
+- label: 45
+  name: dining_room_table
+  name_descriptive: a dining room table
+- label: 46
+  name: island
+  name_descriptive: a island
+- label: 47
+  name: dining_room
+  name_descriptive: a dining room
+- label: 48
+  name: middle
+  name_descriptive: a middle
+- label: 49
+  name: counter_space
+  name_descriptive: a counter space
+- label: 50
+  name: view
+  name_descriptive: a view
+- label: 51
+  name: dining_table
+  name_descriptive: a dining table
+- label: 52
+  name: lot
+  name_descriptive: a lot
+- label: 53
+  name: tv
+  name_descriptive: a tv
+- label: 54
+  name: teddy_bear
+  name_descriptive: a teddy bear
+- label: 55
+  name: toilet_seat
+  name_descriptive: a toilet seat
+- label: 56
+  name: bathroom
+  name_descriptive: a bathroom
+- label: 57
+  name: painting
+  name_descriptive: a painting
+- label: 58
+  name: stove
+  name_descriptive: a stove
+- label: 59
+  name: corner
+  name_descriptive: a corner
+- label: 60
+  name: flooring_area
+  name_descriptive: a flooring area
+- label: 61
+  name: man
+  name_descriptive: a man
+- label: 62
+  name: counter_top
+  name_descriptive: a counter top
+- label: 63
+  name: refrigerator
+  name_descriptive: a refrigerator
+- label: 64
+  name: walls
+  name_descriptive: a walls
+- label: 65
+  name: kitchen_door
+  name_descriptive: a kitchen door
+- label: 66
+  name: glass_door
+  name_descriptive: a glass door
+- label: 67
+  name: tile_floor
+  name_descriptive: a tile floor
+- label: 68
+  name: drawer
+  name_descriptive: a drawer
+- label: 69
+  name: drawers
+  name_descriptive: a drawers
+- label: 70
+  name: dishwasher
+  name_descriptive: a dishwasher
+- label: 71
+  name: cabinets
+  name_descriptive: a cabinets
+- label: 72
+  name: window_repairer
+  name_descriptive: a window repairer
+- label: 73
+  name: hole
+  name_descriptive: a hole
+- label: 74
+  name: painter
+  name_descriptive: a painter
+- label: 75
+  name: camera
+  name_descriptive: a camera
+- label: 76
+  name: reflection
+  name_descriptive: a reflection
+- label: 77
+  name: window_sill
+  name_descriptive: a window sill
+- label: 78
+  name: background
+  name_descriptive: a background
+- label: 79
+  name: back
+  name_descriptive: a back
+- label: 80
+  name: desk
+  name_descriptive: a desk
+- label: 81
+  name: clock
+  name_descriptive: a clock
+- label: 82
+  name: vase
+  name_descriptive: a vase
+- label: 83
+  name: piano
+  name_descriptive: a piano
+- label: 84
+  name: dog
+  name_descriptive: a dog
+- label: 85
+  name: foreground
+  name_descriptive: a foreground
+- label: 86
+  name: doorway
+  name_descriptive: a doorway
+- label: 87
+  name: hammer
+  name_descriptive: a hammer
+- label: 88
+  name: staircase
+  name_descriptive: a staircase
+- label: 89
+  name: person
+  name_descriptive: a person
+- label: 90
+  name: home
+  name_descriptive: a home
+- label: 91
+  name: living_room_area
+  name_descriptive: a living room area
+- label: 92
+  name: piece
+  name_descriptive: a piece
+- label: 93
+  name: coffee_table
+  name_descriptive: a coffee table
+- label: 94
+  name: television
+  name_descriptive: a television
+- label: 95
+  name: beds
+  name_descriptive: a beds
+- label: 96
+  name: hallway
+  name_descriptive: a hallway
+- label: 97
+  name: animal
+  name_descriptive: a animal
+- label: 98
+  name: people
+  name_descriptive: a people
+- label: 99
+  name: animals
+  name_descriptive: a animals
+- label: 100
+  name: toilet_paper_roll
+  name_descriptive: a toilet paper roll
+- label: 101
+  name: flowers
+  name_descriptive: a flowers
+- label: 102
+  name: flower
+  name_descriptive: a flower
+- label: 103
+  name: cloud
+  name_descriptive: a cloud
+- label: 104
+  name: hand
+  name_descriptive: a hand
+- label: 105
+  name: plane
+  name_descriptive: a plane
+- label: 106
+  name: ground
+  name_descriptive: a ground
+- label: 107
+  name: pillow
+  name_descriptive: a pillow
+- label: 108
+  name: bench
+  name_descriptive: a bench
+- label: 109
+  name: paper
+  name_descriptive: a paper
+- label: 110
+  name: side
+  name_descriptive: a side
+- label: 111
+  name: step
+  name_descriptive: a step
+- label: 112
+  name: tape
+  name_descriptive: a tape
+- label: 113
+  name: steps
+  name_descriptive: a steps
+- label: 114
+  name: building
+  name_descriptive: a building
+- label: 115
+  name: bedroom
+  name_descriptive: a bedroom
+- label: 116
+  name: sheet
+  name_descriptive: a sheet
+- label: 117
+  name: pillows
+  name_descriptive: a pillows
+- label: 118
+  name: sheets
+  name_descriptive: a sheets
+- label: 119
+  name: pictures
+  name_descriptive: a pictures
+- label: 120
+  name: side_table
+  name_descriptive: a side table
+- label: 121
+  name: comforter
+  name_descriptive: a comforter
+- label: 122
+  name: tub
+  name_descriptive: a tub
+- label: 123
+  name: entrance_way
+  name_descriptive: a entrance way
+- label: 124
+  name: headboard
+  name_descriptive: a headboard
+- label: 125
+  name: bike
+  name_descriptive: a bike
+- label: 126
+  name: tree
+  name_descriptive: a tree
+- label: 127
+  name: lawn
+  name_descriptive: a lawn
+- label: 128
+  name: yard
+  name_descriptive: a yard
+- label: 129
+  name: handle
+  name_descriptive: a handle
+- label: 130
+  name: shower_curtain
+  name_descriptive: a shower curtain
+- label: 131
+  name: vanity
+  name_descriptive: a vanity
+- label: 132
+  name: insulation_material
+  name_descriptive: a insulation material
+- label: 133
+  name: wood
+  name_descriptive: a wood
+- label: 134
+  name: pipe
+  name_descriptive: a pipe
+- label: 135
+  name: pipes
+  name_descriptive: a pipes
+- label: 136
+  name: insulation
+  name_descriptive: a insulation
+- label: 137
+  name: insulation_covering
+  name_descriptive: a insulation covering
+- label: 138
+  name: ladder
+  name_descriptive: a ladder
+- label: 139
+  name: board
+  name_descriptive: a board
+- label: 140
+  name: boards
+  name_descriptive: a boards
+- label: 141
+  name: insulations
+  name_descriptive: a insulations
+- label: 142
+  name: worker
+  name_descriptive: a worker
+- label: 143
+  name: cardboard
+  name_descriptive: a cardboard
+- label: 144
+  name: top
+  name_descriptive: a top
+- label: 145
+  name: pieces
+  name_descriptive: a pieces
+- label: 146
+  name: pallet
+  name_descriptive: a pallet
+- label: 147
+  name: left
+  name_descriptive: a left
+- label: 148
+  name: drywall
+  name_descriptive: a drywall
+- label: 149
+  name: wood_panels
+  name_descriptive: a wood panels
+- label: 150
+  name: wood_panel
+  name_descriptive: a wood panel
+- label: 151
+  name: place
+  name_descriptive: a place
+- label: 152
+  name: railing
+  name_descriptive: a railing
+- label: 153
+  name: light
+  name_descriptive: a light
+- label: 154
+  name: curtains
+  name_descriptive: a curtains
+- label: 155
+  name: rail
+  name_descriptive: a rail
+- label: 156
+  name: horse
+  name_descriptive: a horse
+- label: 157
+  name: chain
+  name_descriptive: a chain
+- label: 158
+  name: closet
+  name_descriptive: a closet
+- label: 159
+  name: shelf
+  name_descriptive: a shelf
+- label: 160
+  name: marble_floor
+  name_descriptive: a marble floor
+- label: 161
+  name: ceiling
+  name_descriptive: a ceiling
+- label: 162
+  name: hallway_way
+  name_descriptive: a hallway way
+- label: 163
+  name: book
+  name_descriptive: a book
+- label: 164
+  name: street
+  name_descriptive: a street
+- label: 165
+  name: carpet
+  name_descriptive: a carpet
+- label: 166
+  name: snowboard
+  name_descriptive: a snowboard
+- label: 167
+  name: slope
+  name_descriptive: a slope
+- label: 168
+  name: door_handle
+  name_descriptive: a door handle
+- label: 169
+  name: window_handle
+  name_descriptive: a window handle
+- label: 170
+  name: door_way
+  name_descriptive: a door way
+- label: 171
+  name: stair_rail
+  name_descriptive: a stair rail

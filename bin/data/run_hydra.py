@@ -109,13 +109,13 @@ import numpy as np
 import threading
 import numpy as np
 
-def _run_scene(dataloader, pipeline, max_steps, data_callbacks, label_generator, label_rate=None, scene_output=None):
+def _run_scene(dataloader, pipeline, max_steps, data_callbacks, label_generator, label_rate=None):
 
     last_label_timestamp = None
     min_label_dt_ns = int(1e9 / label_rate) if label_rate else 0
     label_thread_active = False
 
-    current_index = sum(len(v) for v in label_generator.scene_label_space.values()) # current index = length of the original label space
+    current_index = label_generator.original_num_labels # current index = length of the original label space
     print(f"🔢 Initialized current_index to {current_index} based on loaded scene label space.")
 
     def _step_pipeline(packet):
@@ -244,7 +244,7 @@ def mp3d(dataset_path, visualize, zmq_url, max_steps, use_clip, force, output, l
     scenes = [x for x in dataset_path.iterdir() if x.is_dir()]
 
     labelspace_path = hydra.get_config_path() / "label_spaces" / "ade20k_mp3d_label_space.yaml"
-    label_generator = LabelGenerator(fixed_labelspace_path=labelspace_path)
+    label_generator = LabelGenerator(fixed_labelspace_path=labelspace_path, dataset_name="mp3d")
 
     signal.signal(signal.SIGINT, signal.SIG_DFL)
 
@@ -262,9 +262,6 @@ def mp3d(dataset_path, visualize, zmq_url, max_steps, use_clip, force, output, l
                 if scene_output is None:
                     continue
 
-                label_generator.set_autosave_path(scene_output) 
-                label_generator.set_run_info("mp3d", scene_path.stem)
-
                 pipeline = hydra.load_pipeline(
                     sensor,
                     "mp3d",
@@ -277,11 +274,9 @@ def mp3d(dataset_path, visualize, zmq_url, max_steps, use_clip, force, output, l
                 # print("RUN_SCENE BEFORE")
                 _run_scene(dataloader, pipeline, max_steps, data_callbacks, label_generator, label_rate)
                 # print("RUN_SCENE_AFTER")
-                label_generator.save_scene_label_space(scene_output)
 
             except KeyboardInterrupt:
                 click.secho(f"⚠️ KeyboardInterrupt detected during scene '{scene_path.stem}'. Saving partial label space...", fg="yellow")
-                label_generator.save_scene_label_space(scene_output)
                 raise  # re-raise to cleanly quit
 
             except Exception:

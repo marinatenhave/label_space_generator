@@ -11,17 +11,20 @@ from PIL import Image
 import json
 import os
 from pathlib import Path
+import yaml
+import pathlib
+from datetime import datetime
 
 
 class LabelGenerator:
-    def __init__(self, fixed_labelspace_path=None, device=None):
+    def __init__(self, fixed_labelspace_path=None, dataset_name=None, device=None):
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
         print(f"🚀 Using device: {self.device}")
 
-        self._dataset_name = None
-        self._scene_name = None
-        self._fixed_labelspace_path = None  # Renamed field for fixed label space YAML
-        self._step_count = 0  # For autosave tracking
+        self._step_count = 0  # For autosave 
+        self.dataset_name = dataset_name
+        self.scene_name = None 
+        self._set_output_paths()
 
         # Load BLIP model
         print("🔄 Loading BLIP model...")
@@ -49,23 +52,54 @@ class LabelGenerator:
         # ✅ Initialize scene label space path & variable (either from YAML or clean)
         if fixed_labelspace_path:
             self._fixed_labelspace_path = fixed_labelspace_path
+            self.initialize_generated_yaml()
             self.load_scene_space_from_yaml(fixed_labelspace_path)
             self._fixed_scene_space = {
                 k: set(v) for k, v in self.scene_label_space.items()
             }  # 🧠 Store fixed labelspace copy
         else:
             self.reset_scene_space()
-
-    def set_run_info(self, dataset_name, scene_name):
-        """Set dataset name and scene name for YAML label space saving."""
-        self._dataset_name = dataset_name
-        self._scene_name = scene_name
-        print(f"📝 Run info set: dataset = {dataset_name}, scene = {scene_name}")
     
+    def _set_output_paths(self):
+        """Set paths for saving YAML and JSON label spaces under: out/<dataset>/label_spaces/<timestamp>/."""
+        out_root = Path(__file__).resolve().parent.parent / "out"
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+        if self.dataset_name:
+            dir_path = out_root / self.dataset_name / "label_spaces" / timestamp
+        else:
+            dir_path = out_root / "general" / "label_spaces" / timestamp
+
+        dir_path.mkdir(parents=True, exist_ok=True)
+
+        self._generated_yaml_path = dir_path / "scene_label_space.yaml"
+        self._generated_json_path = dir_path / "scene_label_space.json"
+    
+    def initialize_generated_yaml(self):
+        """Copy the original fixed YAML contents exactly to the generated YAML path."""
+
+        if not hasattr(self, "_fixed_labelspace_path") or not self._fixed_labelspace_path:
+            print("⚠️ No fixed labelspace path available to duplicate.")
+            return
+
+        src_path = Path(self._fixed_labelspace_path)
+        dst_path = Path(self._generated_yaml_path)
+
+        if not src_path.exists():
+            print(f"❌ Fixed labelspace file not found: {src_path}")
+            return
+
+        with open(src_path, "r") as f:
+            yaml_data = yaml.safe_load(f)
+
+        # Dump exactly as loaded — preserves original field and label order
+        with open(dst_path, "w") as f:
+            yaml.dump(yaml_data, f, sort_keys=False)
+
+        print(f"✅ Duplicated fixed YAML to generated one: {dst_path}")
+
     def load_scene_space_from_yaml(self, labelspace_path):
         """Initialize scene_label_space from a fixed Hydra YAML label space file."""
-        import yaml
-        import pathlib
 
         labelspace_file = pathlib.Path(labelspace_path)
         if not labelspace_file.exists():
@@ -74,6 +108,8 @@ class LabelGenerator:
 
         with open(labelspace_file, "r") as f:
             label_data = yaml.safe_load(f)
+        
+        self.original_num_labels = label_data["total_semantic_labels"]
 
         label_id_to_name = {entry["label"]: entry["name"] for entry in label_data.get("label_names", [])}
 
@@ -113,79 +149,67 @@ class LabelGenerator:
             "surface": set(),
             "region": set()
         }
-    
-    def _update_labelspace_yaml(self, labelspace_path, newly_added_labels=None):
-        """Update a label space YAML file with the full scene_label_space."""
+
+    def _update_generated_yaml(self, newly_added_labels=None):
+        """Append new labels to the YAML, preserving original label order."""
         import yaml
         from pathlib import Path
 
-        labelspace_file = Path(labelspace_path)
+        labelspace_file = Path(self._generated_yaml_path)
 
-        # Load or initialize YAML structure
         if not labelspace_file.exists():
-            print(f"📄 YAML file not found — creating new one at: {labelspace_file}")
-            label_data = {
-                "total_semantic_labels": 0,
-                "dynamic_labels": [],
-                "object_labels": [],
-                "surface_places_labels": [],
-                "label_names": []
-            }
+            print(f"❌ Generated YAML path does not exist: {labelspace_file}")
+            return
+
+        with open(labelspace_file, "r") as f:
+            label_data = yaml.safe_load(f) or {}
+
+        # Ensure necessary fields exist
+        for field in ["total_semantic_labels", "dynamic_labels", "object_labels",
+                    "surface_places_labels", "label_names"]:
+            if field not in label_data:
+                label_data[field] = [] if field != "total_semantic_labels" else 0
+
+        existing_names = {entry['name'] for entry in label_data['label_names']}
+        current_index = label_data["total_semantic_labels"]
+
+        if not newly_added_labels:
+            print("ℹ️ No new labels to add to YAML.")
         else:
-            with open(labelspace_file, 'r') as f:
-                label_data = yaml.safe_load(f) or {}
+            for norm_label, category in newly_added_labels:
+                if norm_label in existing_names:
+                    continue  # Already added before
 
-            # Sanity check / initialize structure if missing
-            for field in ["total_semantic_labels", "dynamic_labels", "object_labels", "surface_places_labels", "label_names"]:
-                if field not in label_data:
-                    label_data[field] = [] if field != "total_semantic_labels" else 0
+                print(f"💡 Writing new label to YAML: {norm_label} ({category})")
 
-        # Build name-to-label map
-        existing_names = {entry['name']: entry['label'] for entry in label_data['label_names']}
-        current_index = label_data['total_semantic_labels']
+                # Append to label_names list (preserving order)
+                label_data["label_names"].append({
+                    "label": current_index,
+                    "name": norm_label,
+                    "name_descriptive": f"a {norm_label.replace('_', ' ')}"
+                })
 
-        # ✅ Always reflect the full scene_label_space (not just newly added)
-        label_source = [
-            (label.lower().replace(" ", "_"), category)
-            for category, label_set in self.scene_label_space.items()
-            for label in label_set
-        ]
+                # Append to category lists
+                if category in ["object", "agent"]:
+                    label_data["object_labels"].append(current_index)
+                if category in ["surface", "region"]:
+                    label_data["surface_places_labels"].append(current_index)
+                if category == "agent":
+                    label_data["dynamic_labels"].append(current_index)
 
-        for norm_label, category in label_source:
-            if norm_label in existing_names:
-                continue  # already recorded in YAML
+                current_index += 1
 
-            print(f"💡 Writing new label to YAML: {norm_label} ({category})")
-            label_data["label_names"].append({
-                "label": current_index,
-                "name": norm_label,
-                "name_descriptive": f"a {norm_label.replace('_', ' ')}"
-            })
+            label_data["total_semantic_labels"] = current_index
 
-            if category in ["object", "agent"]:
-                label_data["object_labels"].append(current_index)
-            if category in ["surface", "region"]:
-                label_data["surface_places_labels"].append(current_index)
-            if category == "agent":
-                label_data["dynamic_labels"].append(current_index)
+            with open(labelspace_file, "w") as f:
+                yaml.dump(label_data, f, sort_keys=False)
 
-            existing_names[norm_label] = current_index
-            current_index += 1
+            print(f"✅ Label space YAML saved to: {labelspace_file}")
+            print(f"🛠️ Final YAML now contains {len(label_data['label_names'])} labels")
 
-        label_data["total_semantic_labels"] = current_index
-
-        # Save to file
-        with open(labelspace_file, 'w') as f:
-            yaml.dump(label_data, f, sort_keys=False)
-
-        print(f"✅ Label space YAML saved to: {labelspace_file}")
-
-
+   
     def step(self, image_array):
         """Process a single image frame and update label spaces."""
-        import os
-        import yaml
-        import pathlib
 
         # 🌟 Reset instance label space at the start of each step
         self.instance_label_space = {
@@ -244,43 +268,9 @@ class LabelGenerator:
         # ➕ Increment step count
         self._step_count += 1
 
-        # 💾 Save scene-specific JSON
-        if hasattr(self, "_autosave_path") and self._autosave_path is not None:
-            self.save_scene_label_space_json(self._autosave_path)
-
-        # # ✏️ Update Hydra fixed labelspace
-        # if hasattr(self, "_fixed_labelspace_path") and self._fixed_labelspace_path is not None:
-        #     print("updating fixed labelspace??")
-        #     self._update_labelspace_yaml(self._fixed_labelspace_path, newly_added_labels)
-
-        # ✏️ Update per-scene generated labelspace
-        from datetime import datetime
-
-        out_root = Path(__file__).resolve().parent.parent / "out"
-
-        if self._dataset_name and self._scene_name:
-            # Case 1: both dataset and scene
-            labelspace_path = out_root / self._dataset_name / self._scene_name / "scene_label_space.yaml"
-
-        elif self._dataset_name and not self._scene_name:
-            # Case 2: dataset only
-            labelspace_path = out_root / self._dataset_name / "general" / "scene_label_space.yaml"
-
-        elif self._scene_name and not self._dataset_name:
-            # Case 3: scene only
-            labelspace_path = out_root / "general" / f"scene_label_space_{self._scene_name}.yaml"
-
-        else:
-            # Case 4: neither dataset nor scene
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            labelspace_path = out_root / "general" / f"scene_label_space_{timestamp}.yaml"
-
-
-        # 💾 Ensure parent directory exists
-        labelspace_path.parent.mkdir(parents=True, exist_ok=True)
-
-        # 📝 Write label space YAML
-        self._update_labelspace_yaml(labelspace_path, newly_added_labels)
+        # 📝 Write label space JSON and YAML
+        self._update_generated_json()
+        self._update_generated_yaml(newly_added_labels)
 
         return newly_added_labels
 
@@ -360,18 +350,74 @@ class LabelGenerator:
 
         return classified_categories
     
-    def save_scene_label_space_json(self, scene_output_path):
-        """
-        Save the current scene label space to a JSON file under 
-        scene_output_path/scene_label_spaces/scene_label_space.json.
-        """
-        label_space_dir = Path(scene_output_path) / "label_spaces"
-        label_space_dir.mkdir(parents=True, exist_ok=True)
-
-        output_file = label_space_dir / "scene_label_space.json"
-
+    def _update_generated_json(self):
+        """Update the scene label space JSON file in the same location as the YAML."""
         label_dict = {k: sorted(list(v)) for k, v in self.scene_label_space.items()}
-        with open(output_file, "w") as f:
+        with open(self._generated_json_path, "w") as f:
             json.dump(label_dict, f, indent=2)
+        print(f"✅ Scene label space JSON updated at: {self._generated_json_path}")
 
-        print(f"💾 Saved scene label space to {output_file}")
+    
+    def assign_missing_categories(self):
+        """Ensure all labels in the fixed labelspace YAML have a category assignment."""
+
+        if not hasattr(self, "_fixed_labelspace_path") or self._fixed_labelspace_path is None:
+            print("⚠️ No fixed labelspace path set. Skipping category assignment.")
+            return
+
+        labelspace_file = pathlib.Path(self._fixed_labelspace_path)
+        if not labelspace_file.exists():
+            print(f"❌ Fixed labelspace file does not exist: {labelspace_file}")
+            return
+
+        with open(labelspace_file, 'r') as f:
+            label_data = yaml.safe_load(f)
+
+        if label_data is None or "label_names" not in label_data:
+            print("❌ Malformed or empty labelspace YAML.")
+            return
+
+        # Ensure required fields exist
+        for key in ["object_labels", "surface_places_labels", "dynamic_labels"]:
+            if key not in label_data:
+                label_data[key] = []
+
+        existing_assignments = set(label_data["object_labels"]) | set(label_data["surface_places_labels"]) | set(label_data["dynamic_labels"])
+        name_to_label = {entry["name"]: entry["label"] for entry in label_data["label_names"]}
+
+        labels_to_classify = []
+        label_ids_to_names = {}
+
+        for entry in label_data["label_names"]:
+            label = entry["label"]
+            name = entry["name"]
+
+            if label not in existing_assignments and name != "void":
+                labels_to_classify.append(name)
+                label_ids_to_names[name] = label
+
+        if not labels_to_classify:
+            print("✅ No missing category assignments.")
+            return
+
+        print(f"🔍 Assigning categories to {len(labels_to_classify)} unassigned labels...")
+
+        predictions = self._classify_nouns(labels_to_classify)
+
+        for category, name_set in predictions.items():
+            for name in name_set:
+                label_id = label_ids_to_names[name]
+                if category in ["object", "agent"]:
+                    label_data["object_labels"].append(label_id)
+                if category in ["surface", "region"]:
+                    label_data["surface_places_labels"].append(label_id)
+                if category == "agent":
+                    label_data["dynamic_labels"].append(label_id)
+                print(f"🧠 Assigned {name} → {category}")
+
+        # Write back to YAML
+        with open(labelspace_file, 'w') as f:
+            yaml.dump(label_data, f, sort_keys=False)
+
+        print(f"✅ Fixed labelspace categories updated at: {labelspace_file}")
+

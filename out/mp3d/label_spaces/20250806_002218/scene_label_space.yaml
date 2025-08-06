@@ -1,0 +1,194 @@
+total_semantic_labels: 47
+dynamic_labels:
+- 35
+object_labels:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+- 11
+- 12
+- 13
+- 14
+- 15
+- 16
+- 17
+- 18
+- 19
+- 20
+- 21
+- 22
+- 23
+- 24
+- 25
+- 26
+- 27
+- 28
+- 29
+- 30
+- 31
+- 32
+- 33
+- 34
+- 35
+- 42
+- 43
+- 44
+surface_places_labels:
+- 36
+- 37
+- 38
+- 39
+- 40
+- 41
+- 45
+- 46
+label_names:
+- label: 0
+  name: window
+  name_descriptive: a window
+- label: 1
+  name: chair
+  name_descriptive: a chair
+- label: 2
+  name: curtain
+  name_descriptive: a curtain
+- label: 3
+  name: shower
+  name_descriptive: a shower
+- label: 4
+  name: sink
+  name_descriptive: a sink
+- label: 5
+  name: mirror
+  name_descriptive: a mirror
+- label: 6
+  name: plant
+  name_descriptive: a plant
+- label: 7
+  name: blinds
+  name_descriptive: a blinds
+- label: 8
+  name: door
+  name_descriptive: a door
+- label: 9
+  name: counter
+  name_descriptive: a counter
+- label: 10
+  name: toilet
+  name_descriptive: a toilet
+- label: 11
+  name: appliances
+  name_descriptive: a appliances
+- label: 12
+  name: railing
+  name_descriptive: a railing
+- label: 13
+  name: cushion
+  name_descriptive: a cushion
+- label: 14
+  name: towel
+  name_descriptive: a towel
+- label: 15
+  name: seating
+  name_descriptive: a seating
+- label: 16
+  name: bed
+  name_descriptive: a bed
+- label: 17
+  name: chest_of_drawers
+  name_descriptive: a chest of drawers
+- label: 18
+  name: objects
+  name_descriptive: a objects
+- label: 19
+  name: outside
+  name_descriptive: a outside
+- label: 20
+  name: stool
+  name_descriptive: a stool
+- label: 21
+  name: cabinet
+  name_descriptive: a cabinet
+- label: 22
+  name: sofa
+  name_descriptive: a sofa
+- label: 23
+  name: furniture
+  name_descriptive: a furniture
+- label: 24
+  name: tv_monitor
+  name_descriptive: a tv monitor
+- label: 25
+  name: shelving
+  name_descriptive: a shelving
+- label: 26
+  name: clothes
+  name_descriptive: a clothes
+- label: 27
+  name: table
+  name_descriptive: a table
+- label: 28
+  name: fireplace
+  name_descriptive: a fireplace
+- label: 29
+  name: column
+  name_descriptive: a column
+- label: 30
+  name: lighting
+  name_descriptive: a lighting
+- label: 31
+  name: bathtub
+  name_descriptive: a bathtub
+- label: 32
+  name: misc
+  name_descriptive: a misc
+- label: 33
+  name: picture
+  name_descriptive: a picture
+- label: 34
+  name: board_panel
+  name_descriptive: a board panel
+- label: 35
+  name: cat
+  name_descriptive: a cat
+- label: 36
+  name: floor
+  name_descriptive: a floor
+- label: 37
+  name: ceiling
+  name_descriptive: a ceiling
+- label: 38
+  name: stairs
+  name_descriptive: a stairs
+- label: 39
+  name: wall
+  name_descriptive: a wall
+- label: 40
+  name: kitchen
+  name_descriptive: a kitchen
+- label: 41
+  name: house
+  name_descriptive: a house
+- label: 42
+  name: rug
+  name_descriptive: a rug
+- label: 43
+  name: lamp
+  name_descriptive: a lamp
+- label: 44
+  name: photo
+  name_descriptive: a photo
+- label: 45
+  name: living room
+  name_descriptive: a living room
+- label: 46
+  name: room
+  name_descriptive: a room

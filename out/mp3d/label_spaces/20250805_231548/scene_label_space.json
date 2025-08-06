@@ -1,0 +1,63 @@
+{
+  "object": [
+    "appliances",
+    "bathtub",
+    "bed",
+    "blinds",
+    "board_panel",
+    "cabinet",
+    "chair",
+    "chest_of_drawers",
+    "clothes",
+    "column",
+    "couch",
+    "counter",
+    "curtain",
+    "cushion",
+    "door",
+    "fireplace",
+    "furniture",
+    "lamp",
+    "lighting",
+    "mirror",
+    "misc",
+    "objects",
+    "outside",
+    "photo",
+    "picture",
+    "plant",
+    "railing",
+    "rug",
+    "seating",
+    "shelving",
+    "shower",
+    "sink",
+    "sofa",
+    "stool",
+    "table",
+    "toilet",
+    "towel",
+    "tv_monitor",
+    "window"
+  ],
+  "agent": [
+    "cat",
+    "misc"
+  ],
+  "surface": [
+    "ceiling",
+    "floor",
+    "stairs",
+    "wall"
+  ],
+  "region": [
+    "ceiling",
+    "floor",
+    "house",
+    "kitchen",
+    "living room",
+    "room",
+    "stairs",
+    "wall"
+  ]
+}

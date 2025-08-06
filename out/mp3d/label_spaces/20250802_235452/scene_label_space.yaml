@@ -1,0 +1,42 @@
+total_semantic_labels: 9
+dynamic_labels:
+- 1
+object_labels:
+- 0
+- 1
+- 4
+- 5
+- 6
+surface_places_labels:
+- 2
+- 3
+- 7
+- 8
+label_names:
+- label: 0
+  name: outside
+  name_descriptive: a outside
+- label: 1
+  name: cat
+  name_descriptive: a cat
+- label: 2
+  name: house
+  name_descriptive: a house
+- label: 3
+  name: kitchen
+  name_descriptive: a kitchen
+- label: 4
+  name: lamp
+  name_descriptive: a lamp
+- label: 5
+  name: photo
+  name_descriptive: a photo
+- label: 6
+  name: rug
+  name_descriptive: a rug
+- label: 7
+  name: living_room
+  name_descriptive: a living room
+- label: 8
+  name: room
+  name_descriptive: a room
